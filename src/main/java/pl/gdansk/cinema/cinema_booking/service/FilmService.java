@@ -57,9 +57,19 @@ public class FilmService {
         existingFilm.setWiek(filmDto.getWiek());
         existingFilm.setRezyser(filmDto.getRezyser());
         existingFilm.setObsada(filmDto.getObsada());
+        existingFilm.setCzasTrwania(filmDto.getCzasTrwania());
+        existingFilm.setObrazUrl(filmDto.getObrazUrl());
         
         Film updatedFilm = filmRepository.save(existingFilm);
         return filmMapper.toDto(updatedFilm);
+    }
+
+    @Transactional
+    public void updateFilmPoster(Long id, String imageUrl) {
+        Film existingFilm = filmRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Film nie znaleziony o id: " + id));
+        existingFilm.setObrazUrl(imageUrl);
+        filmRepository.save(existingFilm);
     }
 
     @Transactional

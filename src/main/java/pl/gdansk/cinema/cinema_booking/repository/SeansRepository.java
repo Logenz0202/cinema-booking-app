@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface SeansRepository extends JpaRepository<Seans, Long> {
     List<Seans> findByFilmIdAndDataGodzinaAfter(Long filmId, LocalDateTime data);
+    List<Seans> findBySalaIdAndDataGodzinaBetween(Long salaId, LocalDateTime start, LocalDateTime end);
 }

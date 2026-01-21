@@ -40,6 +40,7 @@ public class DataInitializer implements CommandLineRunner {
                     .rezyser("Tim Miller")
                     .obsada("Ryan Reynolds, Morena Baccarin")
                     .obrazUrl("/images/posters/deadpool.jpg")
+                    .czasTrwania(108)
                     .build();
 
             Film film2 = Film.builder()
@@ -49,6 +50,7 @@ public class DataInitializer implements CommandLineRunner {
                     .rezyser("Dean DeBlois")
                     .obsada("Mason Thames, Nico Parker")
                     .obrazUrl("/images/posters/httyd.png")
+                    .czasTrwania(125)
                     .build();
 
             Film film3 = Film.builder()
@@ -58,6 +60,7 @@ public class DataInitializer implements CommandLineRunner {
                     .rezyser("Jared Bush, Byron Howard")
                     .obsada("Andy Samberg, Ginnifer Goodwin, Jason Bateman")
                     .obrazUrl("/images/posters/zootopia_2.jpg")
+                    .czasTrwania(110)
                     .build();
 
             filmRepository.save(film1);

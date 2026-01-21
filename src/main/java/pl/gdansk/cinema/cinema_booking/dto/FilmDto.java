@@ -22,4 +22,7 @@ public class FilmDto {
     private String rezyser;
     private String obsada;
     private String obrazUrl;
+
+    @Positive(message = "Czas trwania musi być dodatni")
+    private Integer czasTrwania;
 }

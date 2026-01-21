@@ -2,6 +2,7 @@ package pl.gdansk.cinema.cinema_booking.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -24,7 +25,10 @@ public class SecurityConfig {
                         .requestMatchers("/", "/index.html", "/filmy.html", "/sala.html", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/filmy/**").permitAll()
                         .requestMatchers("/api/v1/filmy/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/sale/**", "/api/v1/seanse/**").permitAll()
+                        .requestMatchers("/api/v1/sale/**", "/api/v1/seanse/**", "/api/v1/raporty/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))

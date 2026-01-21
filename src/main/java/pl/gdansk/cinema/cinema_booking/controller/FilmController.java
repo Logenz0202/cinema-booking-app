@@ -9,9 +9,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.gdansk.cinema.cinema_booking.dto.FilmDto;
+import pl.gdansk.cinema.cinema_booking.service.FileService;
 import pl.gdansk.cinema.cinema_booking.service.FilmService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,11 +23,20 @@ import java.util.List;
 @Tag(name = "Film", description = "Zarządzanie filmami")
 public class FilmController {
     private final FilmService filmService;
+    private final FileService fileService;
 
     @GetMapping
     @Operation(summary = "Pobierz wszystkie filmy z paginacją")
     public ResponseEntity<Page<FilmDto>> getAllFilmy(Pageable pageable) {
         return ResponseEntity.ok(filmService.getAllFilmy(pageable));
+    }
+
+    @PostMapping("/{id}/poster")
+    @Operation(summary = "Prześlij plakat dla filmu")
+    public ResponseEntity<String> uploadPoster(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws IOException {
+        String imageUrl = fileService.saveImage(file);
+        filmService.updateFilmPoster(id, imageUrl);
+        return ResponseEntity.ok(imageUrl);
     }
 
     @GetMapping("/{id}")
