@@ -21,4 +21,5 @@ public class FilmDto {
 
     private String rezyser;
     private String obsada;
+    private String obrazUrl;
 }

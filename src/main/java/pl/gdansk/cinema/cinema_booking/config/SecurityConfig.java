@@ -21,7 +21,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/index.html", "/filmy.html", "/sala.html", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/", "/index.html", "/filmy.html", "/sala.html", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/v1/filmy/**").hasRole("ADMIN")

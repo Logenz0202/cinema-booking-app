@@ -19,4 +19,5 @@ public class Film {
     private Integer wiek;
     private String rezyser;
     private String obsada;
+    private String obrazUrl;
 }
