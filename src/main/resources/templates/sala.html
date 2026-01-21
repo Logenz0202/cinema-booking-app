@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rezerwacja Miejsc</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .seat {
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            background-color: #28a745;
+            cursor: pointer;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .seat.occupied {
+            background-color: #dc3545;
+            cursor: not-allowed;
+        }
+        .seat.selected {
+            background-color: #ffc107;
+        }
+        .screen {
+            background-color: #ccc;
+            height: 50px;
+            width: 100%;
+            margin: 20px 0;
+            text-align: center;
+            line-height: 50px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="/">Kino Cinema</a>
+    </div>
+</nav>
+
+<div class="container text-center">
+    <h1>Wybierz miejsca</h1>
+    <div class="screen">EKRAN</div>
+    
+    <div id="seating-plan">
+        <!-- Prosta pętla symulująca miejsca -->
+        <div th:each="r : ${#numbers.sequence(1, 10)}">
+            <div th:each="m : ${#numbers.sequence(1, 15)}" 
+                 class="seat" 
+                 th:data-row="${r}" 
+                 th:data-num="${m}"
+                 onclick="toggleSeat(this)">
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button class="btn btn-success">Zarezerwuj wybrane</button>
+    </div>
+</div>
+
+<script>
+    function toggleSeat(seat) {
+        if (!seat.classList.contains('occupied')) {
+            seat.classList.toggle('selected');
+        }
+    }
+</script>
+</body>
+</html>
