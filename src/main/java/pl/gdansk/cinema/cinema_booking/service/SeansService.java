@@ -41,6 +41,13 @@ public class SeansService {
                 .orElseThrow(() -> new ResourceNotFoundException("Nie znaleziono seansu o ID: " + id));
     }
 
+    @Transactional(readOnly = true)
+    public List<SeansDto> getSeanseByFilmId(Long filmId) {
+        return seansRepository.findByFilmIdAndDataGodzinaAfter(filmId, LocalDateTime.now().minusHours(1)).stream()
+                .map(seansMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public SeansDto createSeans(SeansDto seansDto) {
         validateSeans(seansDto);

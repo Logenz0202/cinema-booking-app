@@ -3,6 +3,8 @@ package pl.gdansk.cinema.cinema_booking.dto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +27,6 @@ public class FilmDto {
 
     @Positive(message = "Czas trwania musi być dodatni")
     private Integer czasTrwania;
+
+    private List<SeansDto> seanse;
 }

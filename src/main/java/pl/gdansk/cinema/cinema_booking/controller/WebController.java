@@ -5,17 +5,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import pl.gdansk.cinema.cinema_booking.dto.FilmDto;
 import pl.gdansk.cinema.cinema_booking.service.FilmService;
+import pl.gdansk.cinema.cinema_booking.service.SeansService;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class WebController {
 
     private final FilmService filmService;
+    private final SeansService seansService;
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("filmy", filmService.getAllFilmy());
+        List<FilmDto> filmy = filmService.getAllFilmy();
+        filmy.forEach(f -> f.setSeanse(seansService.getSeanseByFilmId(f.getId())));
+        model.addAttribute("filmy", filmy);
         return "index";
     }
 
