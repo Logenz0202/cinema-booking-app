@@ -9,9 +9,14 @@ import pl.gdansk.cinema.cinema_booking.entity.Film;
 public interface FilmMapper {
     @Mapping(target = "obrazUrl", source = "obrazUrl")
     @Mapping(target = "czasTrwania", source = "czasTrwania")
+    @Mapping(target = "trailerYoutubeId", source = "trailerYoutubeId")
+    @Mapping(target = "galeriaUrls", source = "galeriaUrls")
+    @Mapping(target = "seanse", ignore = true)
     FilmDto toDto(Film film);
 
     @Mapping(target = "obrazUrl", source = "obrazUrl")
     @Mapping(target = "czasTrwania", source = "czasTrwania")
+    @Mapping(target = "trailerYoutubeId", source = "trailerYoutubeId")
+    @Mapping(target = "galeriaUrls", source = "galeriaUrls")
     Film toEntity(FilmDto filmDto);
 }

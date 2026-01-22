@@ -2,6 +2,7 @@ package pl.gdansk.cinema.cinema_booking.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,4 +22,11 @@ public class Film {
     private String obsada;
     private String obrazUrl;
     private Integer czasTrwania; // w minutach
+
+    private String trailerYoutubeId;
+
+    @ElementCollection
+    @CollectionTable(name = "film_galeria", joinColumns = @JoinColumn(name = "film_id"))
+    @Column(name = "image_url")
+    private List<String> galeriaUrls;
 }

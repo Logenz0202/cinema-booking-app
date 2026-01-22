@@ -56,6 +56,14 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Ryan Reynolds, Morena Baccarin")
                     .obrazUrl("/images/posters/deadpool.png")
                     .czasTrwania(108)
+                    .trailerYoutubeId("ONHBaC-fQ1Y")
+                    .galeriaUrls(List.of(
+                            "/images/gallery/deadpool/1.png",
+                            "/images/gallery/deadpool/2.png",
+                            "/images/gallery/deadpool/3.png",
+                            "/images/gallery/deadpool/4.png",
+                            "/images/gallery/deadpool/5.png"
+                    ))
                     .build();
 
             Film film2 = Film.builder()
@@ -64,8 +72,16 @@ public class DataInitializer implements CommandLineRunner {
                     .wiek(8)
                     .rezyser("Dean DeBlois")
                     .obsada("Mason Thames, Nico Parker")
-                    .obrazUrl("/images/posters/httyd.png")
+                    .obrazUrl("/images/posters/how_to_train_your_dragon.png")
                     .czasTrwania(125)
+                    .trailerYoutubeId("5mS-m99GszA")
+                    .galeriaUrls(List.of(
+                            "/images/gallery/how_to_train_your_dragon/1.png",
+                            "/images/gallery/how_to_train_your_dragon/2.png",
+                            "/images/gallery/how_to_train_your_dragon/3.png",
+                            "/images/gallery/how_to_train_your_dragon/4.png",
+                            "/images/gallery/how_to_train_your_dragon/5.png"
+                    ))
                     .build();
 
             Film film3 = Film.builder()
@@ -76,6 +92,14 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Andy Samberg, Ginnifer Goodwin, Jason Bateman")
                     .obrazUrl("/images/posters/zootopia_2.png")
                     .czasTrwania(110)
+                    .trailerYoutubeId("h0B57yW0pXk")
+                    .galeriaUrls(List.of(
+                            "/images/gallery/zootopia_2/1.png",
+                            "/images/gallery/zootopia_2/2.png",
+                            "/images/gallery/zootopia_2/3.png",
+                            "/images/gallery/zootopia_2/4.png",
+                            "/images/gallery/zootopia_2/5.png"
+                    ))
                     .build();
 
             Film film4 = Film.builder()
@@ -86,6 +110,14 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Sam Worthington, Zoe Saldana, Sigourney Weaver")
                     .obrazUrl("/images/posters/avatar_3.png")
                     .czasTrwania(197)
+                    .trailerYoutubeId("d9SstKj9T-c")
+                    .galeriaUrls(List.of(
+                            "/images/gallery/avatar_3/1.png",
+                            "/images/gallery/avatar_3/2.png",
+                            "/images/gallery/avatar_3/3.png",
+                            "/images/gallery/avatar_3/4.png",
+                            "/images/gallery/avatar_3/5.png"
+                    ))
                     .build();
 
             Film film5 = Film.builder()
@@ -96,6 +128,14 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Keanu Reeves, Donnie Yen, Bill Skarsgård")
                     .obrazUrl("/images/posters/john_wick_4.png")
                     .czasTrwania(169)
+                    .trailerYoutubeId("qEVUtrk8_B4")
+                    .galeriaUrls(List.of(
+                            "/images/gallery/john_wick_4/1.png",
+                            "/images/gallery/john_wick_4/2.png",
+                            "/images/gallery/john_wick_4/3.png",
+                            "/images/gallery/john_wick_4/4.png",
+                            "/images/gallery/john_wick_4/5.png"
+                    ))
                     .build();
 
             Film film6 = Film.builder()
@@ -106,6 +146,14 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Jack Black, Jason Momoa, Emma Myers")
                     .obrazUrl("/images/posters/minecraft_movie.png")
                     .czasTrwania(105)
+                    .trailerYoutubeId("w71JiaW9fho")
+                    .galeriaUrls(List.of(
+                            "/images/gallery/minecraft_movie/1.png",
+                            "/images/gallery/minecraft_movie/2.png",
+                            "/images/gallery/minecraft_movie/3.png",
+                            "/images/gallery/minecraft_movie/4.png",
+                            "/images/gallery/minecraft_movie/5.png"
+                    ))
                     .build();
 
             Film film7 = Film.builder()
@@ -116,6 +164,14 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Neve Campbell, Courteney Cox")
                     .obrazUrl("/images/posters/scream_7.png")
                     .czasTrwania(115)
+                    .trailerYoutubeId("vLzId16YqjY")
+                    .galeriaUrls(List.of(
+                            "/images/gallery/scream_7/1.png",
+                            "/images/gallery/scream_7/2.png",
+                            "/images/gallery/scream_7/3.png",
+                            "/images/gallery/scream_7/4.png",
+                            "/images/gallery/scream_7/5.png"
+                    ))
                     .build();
 
             filmRepository.saveAll(List.of(film1, film2, film3, film4, film5, film6, film7));

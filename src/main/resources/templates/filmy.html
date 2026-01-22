@@ -21,10 +21,44 @@
         </div>
         <div class="col-md-8">
             <h1 th:text="${film.tytul}">Tytuł filmu</h1>
-            <p><strong>Gatunek:</strong> <span th:text="${film.gatunek}"></span></p>
-            <p><strong>Wiek:</strong> <span th:text="${film.wiek}"></span>+</p>
+            <p class="text-muted">
+                <span th:text="${film.gatunek}">Gatunek</span> | 
+                <span th:text="${film.czasTrwania} + ' min'">120 min</span> | 
+                <span class="badge bg-secondary" th:text="${film.wiek} + '+'">12+</span>
+            </p>
             <p><strong>Reżyser:</strong> <span th:text="${film.rezyser}"></span></p>
             <p><strong>Obsada:</strong> <span th:text="${film.obsada}"></span></p>
+            
+            <div th:if="${film.trailerYoutubeId}" class="mt-4">
+                <h3 class="h5 mb-3">Zwiastun</h3>
+                <div class="ratio ratio-16x9 shadow-sm rounded overflow-hidden">
+                    <iframe th:src="'https://www.youtube.com/embed/' + ${film.trailerYoutubeId}" 
+                            title="YouTube video player" frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${film.galeriaUrls != null && !film.galeriaUrls.isEmpty()}" class="mt-5 mb-5">
+        <h3 class="text-center mb-4">Galeria zdjęć</h3>
+        <div id="movieGallery" class="carousel slide shadow" data-bs-ride="carousel">
+            <div class="carousel-inner rounded">
+                <div th:each="imgUrl, iterStat : ${film.galeriaUrls}" 
+                     class="carousel-item" 
+                     th:classappend="${iterStat.first} ? 'active'">
+                    <img th:src="${imgUrl}" class="d-block w-100" style="max-height: 500px; object-fit: cover;" alt="Zdjęcie z filmu">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#movieGallery" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Poprzednie</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#movieGallery" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Następne</span>
+            </button>
         </div>
     </div>
 </div>

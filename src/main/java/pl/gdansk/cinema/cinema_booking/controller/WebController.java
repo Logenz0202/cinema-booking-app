@@ -28,7 +28,11 @@ public class WebController {
 
     @GetMapping("/film/{id}")
     public String filmDetails(@PathVariable Long id, Model model) {
-        model.addAttribute("film", filmService.getFilmById(id));
+        // Pobierz DTO filmu i ustaw seanse - przydane na stronie szczegółów
+        FilmDto film = filmService.getFilmById(id);
+        film.setSeanse(seansService.getSeanseByFilmId(id));
+        model.addAttribute("film", film);
+        // Zwracamy pełny widok szczegółów (filmy.html) z galerią i modalem
         return "filmy";
     }
 

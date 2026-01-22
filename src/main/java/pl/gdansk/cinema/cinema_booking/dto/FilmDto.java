@@ -28,5 +28,8 @@ public class FilmDto {
     @Positive(message = "Czas trwania musi być dodatni")
     private Integer czasTrwania;
 
+    private String trailerYoutubeId;
+    private List<String> galeriaUrls;
+
     private List<SeansDto> seanse;
 }

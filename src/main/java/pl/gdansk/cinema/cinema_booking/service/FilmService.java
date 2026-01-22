@@ -59,6 +59,8 @@ public class FilmService {
         existingFilm.setObsada(filmDto.getObsada());
         existingFilm.setCzasTrwania(filmDto.getCzasTrwania());
         existingFilm.setObrazUrl(filmDto.getObrazUrl());
+        existingFilm.setTrailerYoutubeId(filmDto.getTrailerYoutubeId());
+        existingFilm.setGaleriaUrls(filmDto.getGaleriaUrls());
         
         Film updatedFilm = filmRepository.save(existingFilm);
         return filmMapper.toDto(updatedFilm);
