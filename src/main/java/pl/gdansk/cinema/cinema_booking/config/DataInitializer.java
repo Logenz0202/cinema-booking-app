@@ -9,6 +9,7 @@ import pl.gdansk.cinema.cinema_booking.entity.Uzytkownik;
 import pl.gdansk.cinema.cinema_booking.repository.FilmRepository;
 import pl.gdansk.cinema.cinema_booking.repository.UzytkownikRepository;
 
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -39,7 +40,7 @@ public class DataInitializer implements CommandLineRunner {
                     .wiek(18)
                     .rezyser("Tim Miller")
                     .obsada("Ryan Reynolds, Morena Baccarin")
-                    .obrazUrl("/images/posters/deadpool.jpg")
+                    .obrazUrl("/images/posters/deadpool.png")
                     .czasTrwania(108)
                     .build();
 
@@ -59,14 +60,52 @@ public class DataInitializer implements CommandLineRunner {
                     .wiek(8)
                     .rezyser("Jared Bush, Byron Howard")
                     .obsada("Andy Samberg, Ginnifer Goodwin, Jason Bateman")
-                    .obrazUrl("/images/posters/zootopia_2.jpg")
+                    .obrazUrl("/images/posters/zootopia_2.png")
                     .czasTrwania(110)
                     .build();
 
-            filmRepository.save(film1);
-            filmRepository.save(film2);
-            filmRepository.save(film3);
-            System.out.println(">>> Stworzono przykładowe filmy z obrazkami");
+            Film film4 = Film.builder()
+                    .tytul("Avatar: Ogień i Popiół")
+                    .gatunek("Sci-Fi/Przygodowy")
+                    .wiek(12)
+                    .rezyser("James Cameron")
+                    .obsada("Sam Worthington, Zoe Saldana, Sigourney Weaver")
+                    .obrazUrl("/images/posters/avatar_3.png")
+                    .czasTrwania(197)
+                    .build();
+
+            Film film5 = Film.builder()
+                    .tytul("John Wick 4")
+                    .gatunek("Akcja/Kryminał")
+                    .wiek(18)
+                    .rezyser("Chad Stahelski")
+                    .obsada("Keanu Reeves, Donnie Yen, Bill Skarsgård")
+                    .obrazUrl("/images/posters/john_wick_4.png")
+                    .czasTrwania(169)
+                    .build();
+
+            Film film6 = Film.builder()
+                    .tytul("Minecraft Movie")
+                    .gatunek("Przygodowy/Familijny")
+                    .wiek(7)
+                    .rezyser("Jared Hess")
+                    .obsada("Jack Black, Jason Momoa, Emma Myers")
+                    .obrazUrl("/images/posters/minecraft_movie.png")
+                    .czasTrwania(105)
+                    .build();
+
+            Film film7 = Film.builder()
+                    .tytul("Krzyk 7")
+                    .gatunek("Horror/Mystery")
+                    .wiek(18)
+                    .rezyser("Kevin Williamson")
+                    .obsada("Neve Campbell, Courteney Cox")
+                    .obrazUrl("/images/posters/scream_7.png")
+                    .czasTrwania(115)
+                    .build();
+
+            filmRepository.saveAll(List.of(film1, film2, film3, film4, film5, film6, film7));
+            System.out.println(">>> Stworzono pełny repertuar filmów (7 pozycji)");
         }
     }
 }

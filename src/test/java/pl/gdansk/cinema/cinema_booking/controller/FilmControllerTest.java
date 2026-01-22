@@ -31,6 +31,12 @@ class FilmControllerTest {
     @MockitoBean
     private FilmService filmService;
 
+    @MockitoBean
+    private pl.gdansk.cinema.cinema_booking.service.FileService fileService;
+
+    @MockitoBean
+    private pl.gdansk.cinema.cinema_booking.service.CustomUserDetailsService customUserDetailsService;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -63,12 +69,13 @@ class FilmControllerTest {
     @Test
     @WithMockUser
     void shouldGetFilmById() throws Exception {
-        FilmDto filmDto = FilmDto.builder().id(1L).tytul("Found Film").build();
+        FilmDto filmDto = FilmDto.builder().id(1L).tytul("Found Film").obrazUrl("/img.png").build();
         when(filmService.getFilmById(1L)).thenReturn(filmDto);
 
         mockMvc.perform(get("/api/v1/filmy/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.tytul").value("Found Film"));
+                .andExpect(jsonPath("$.tytul").value("Found Film"))
+                .andExpect(jsonPath("$.obrazUrl").value("/img.png"));
     }
 
     @Test
