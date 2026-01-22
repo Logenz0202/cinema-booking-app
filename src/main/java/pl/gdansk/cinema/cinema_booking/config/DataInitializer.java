@@ -56,7 +56,7 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Ryan Reynolds, Morena Baccarin")
                     .obrazUrl("/images/posters/deadpool.png")
                     .czasTrwania(108)
-                    .trailerYoutubeId("ONHBaC-fQ1Y")
+                    .trailerYoutubeId("Xithigfg7dA")
                     .galeriaUrls(List.of(
                             "/images/gallery/deadpool/1.png",
                             "/images/gallery/deadpool/2.png",
@@ -74,7 +74,7 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Mason Thames, Nico Parker")
                     .obrazUrl("/images/posters/how_to_train_your_dragon.png")
                     .czasTrwania(125)
-                    .trailerYoutubeId("5mS-m99GszA")
+                    .trailerYoutubeId("22w7z_lT6YM")
                     .galeriaUrls(List.of(
                             "/images/gallery/how_to_train_your_dragon/1.png",
                             "/images/gallery/how_to_train_your_dragon/2.png",
@@ -92,7 +92,7 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Andy Samberg, Ginnifer Goodwin, Jason Bateman")
                     .obrazUrl("/images/posters/zootopia_2.png")
                     .czasTrwania(110)
-                    .trailerYoutubeId("h0B57yW0pXk")
+                    .trailerYoutubeId("5AwtptT8X8k")
                     .galeriaUrls(List.of(
                             "/images/gallery/zootopia_2/1.png",
                             "/images/gallery/zootopia_2/2.png",
@@ -110,7 +110,7 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Sam Worthington, Zoe Saldana, Sigourney Weaver")
                     .obrazUrl("/images/posters/avatar_3.png")
                     .czasTrwania(197)
-                    .trailerYoutubeId("d9SstKj9T-c")
+                    .trailerYoutubeId("nb_fFj_0rq8")
                     .galeriaUrls(List.of(
                             "/images/gallery/avatar_3/1.png",
                             "/images/gallery/avatar_3/2.png",
@@ -146,7 +146,7 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Jack Black, Jason Momoa, Emma Myers")
                     .obrazUrl("/images/posters/minecraft_movie.png")
                     .czasTrwania(105)
-                    .trailerYoutubeId("w71JiaW9fho")
+                    .trailerYoutubeId("wJO_vIDZn-I")
                     .galeriaUrls(List.of(
                             "/images/gallery/minecraft_movie/1.png",
                             "/images/gallery/minecraft_movie/2.png",
@@ -164,7 +164,7 @@ public class DataInitializer implements CommandLineRunner {
                     .obsada("Neve Campbell, Courteney Cox")
                     .obrazUrl("/images/posters/scream_7.png")
                     .czasTrwania(115)
-                    .trailerYoutubeId("vLzId16YqjY")
+                    .trailerYoutubeId("UJrghaPJ0RY")
                     .galeriaUrls(List.of(
                             "/images/gallery/scream_7/1.png",
                             "/images/gallery/scream_7/2.png",
