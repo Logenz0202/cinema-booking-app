@@ -35,6 +35,12 @@ public class SeansDto {
     @Positive(message = "Cena musi być dodatnia")
     private Double cenaUlgowy;
 
+    @NotNull(message = "Cena biletu rodzinnego jest wymagana")
+    @Positive(message = "Cena musi być dodatnia")
+    private Double cenaRodzinny;
+
     private String filmTytul;
     private Integer salaNumer;
+    private Integer salaRzedy;
+    private Integer salaMiejscaWRzedzie;
 }

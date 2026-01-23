@@ -5,61 +5,188 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .seat {
-            width: 30px;
-            height: 30px;
-            margin: 5px;
-            background-color: #28a745;
+            width: 35px;
+            height: 35px;
+            margin: 3px;
+            background-color: #e9ecef;
+            border: 2px solid #6c757d;
             cursor: pointer;
-            border-radius: 5px;
-            display: inline-block;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #495057;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .seat:hover:not(.occupied) {
+            background-color: #dee2e6;
+            transform: scale(1.1);
         }
         .seat.occupied {
             background-color: #dc3545;
+            border-color: #a71d2a;
+            color: white;
             cursor: not-allowed;
         }
         .seat.selected {
             background-color: #ffc107;
+            border-color: #d39e00;
+            color: #212529;
+            transform: scale(1.1);
         }
         .screen {
-            background-color: #ccc;
-            height: 50px;
-            width: 100%;
-            margin: 20px 0;
-            text-align: center;
-            line-height: 50px;
+            background: linear-gradient(to bottom, #495057, #ced4da);
+            height: 10px;
+            width: 70%;
+            margin: 0 auto 50px auto;
+            border-radius: 50% / 100% 100% 0 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 15px;
+        }
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border-radius: 4px;
+        }
+        .hall-container {
+            overflow-x: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05);
         }
     </style>
 </head>
-<body>
+<body class="bg-light">
 <nav th:replace="~{fragments/navbar :: navbar}"></nav>
 
-<div class="container text-center mt-4">
-    <h1>Wybierz miejsca</h1>
-    <div class="screen">EKRAN</div>
-    
-    <div id="seating-plan">
-        <!-- Prosta pętla symulująca miejsca -->
-        <div th:each="r : ${#numbers.sequence(1, 10)}">
-            <div th:each="m : ${#numbers.sequence(1, 15)}" 
-                 class="seat" 
-                 th:data-row="${r}" 
-                 th:data-num="${m}"
-                 onclick="toggleSeat(this)">
+<div class="container mt-5">
+    <div class="row">
+        <!-- Panel boczny z informacjami -->
+        <div class="col-lg-4 order-lg-2 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h3 class="h5 card-title fw-bold border-bottom pb-2 mb-3">Szczegóły seansu</h3>
+                    <p class="mb-1"><strong>Film:</strong> <span th:text="${seans.filmTytul}">Tytuł</span></p>
+                    <p class="mb-1"><strong>Data:</strong> <span th:text="${#temporals.format(seans.dataGodzina, 'dd.MM.yyyy HH:mm')}">Data</span></p>
+                    <p class="mb-3"><strong>Sala:</strong> <span th:text="${seans.salaNumer}">1</span></p>
+                    
+                    <div id="selection-summary" class="bg-light p-3 rounded mb-3" style="display: none;">
+                        <h6 class="fw-bold mb-2">Wybrane miejsca:</h6>
+                        <ul id="selected-seats-list" class="list-unstyled mb-0"></ul>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Suma:</span>
+                            <span class="h5 mb-0 fw-bold text-primary"><span id="total-price">0.00</span> zł</span>
+                        </div>
+                    </div>
+                    
+                    <button id="btn-next" class="btn btn-primary w-100 btn-lg rounded-pill shadow-sm" disabled>
+                        Przejdź do biletów
+                    </button>
+                    <p class="text-muted small text-center mt-2">Wybierz miejsca na planie sali, aby kontynuować.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plan sali -->
+        <div class="col-lg-8 order-lg-1">
+            <div class="hall-container text-center mb-4">
+                <h2 class="h4 mb-4 fw-bold">Wybierz miejsca</h2>
+                
+                <div class="screen-label text-muted small mb-2 text-uppercase fw-bold">Ekran</div>
+                <div class="screen mb-5"></div>
+                
+                <div id="seating-plan" class="d-inline-block">
+                    <div th:each="r : ${#numbers.sequence(1, seans.salaRzedy)}" class="d-flex align-items-center mb-1">
+                        <div class="text-muted small fw-bold me-3" style="width: 20px;" th:text="${r}">1</div>
+                        <div th:each="m : ${#numbers.sequence(1, seans.salaMiejscaWRzedzie)}" 
+                             class="seat" 
+                             th:classappend="${occupiedSeats.contains(r + '-' + m)} ? 'occupied' : ''"
+                             th:data-row="${r}" 
+                             th:data-num="${m}"
+                             th:text="${m}"
+                             th:title="'Rząd ' + ${r} + ', Miejsce ' + ${m}"
+                             onclick="toggleSeat(this)">
+                        </div>
+                        <div class="text-muted small fw-bold ms-3" style="width: 20px;" th:text="${r}">1</div>
+                    </div>
+                </div>
+
+                <div class="mt-5 pt-3 border-top">
+                    <div class="legend-item">
+                        <div class="legend-box bg-light border"></div>
+                        <span class="small">Wolne</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box bg-warning"></div>
+                        <span class="small">Wybrane</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box bg-danger"></div>
+                        <span class="small">Zajęte</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="mt-4">
-        <button class="btn btn-success">Zarezerwuj wybrane</button>
-    </div>
 </div>
 
-<script>
+<script th:inline="javascript">
+    const selectedSeats = new Set();
+    const basePrice = /*[[${seans.cenaNormalny}]]*/ 25.0;
+
     function toggleSeat(seat) {
-        if (!seat.classList.contains('occupied')) {
-            seat.classList.toggle('selected');
+        if (seat.classList.contains('occupied')) return;
+        
+        const row = seat.dataset.row;
+        const num = seat.dataset.num;
+        const seatId = `${row}-${num}`;
+        
+        if (selectedSeats.has(seatId)) {
+            selectedSeats.delete(seatId);
+            seat.classList.remove('selected');
+        } else {
+            selectedSeats.add(seatId);
+            seat.classList.add('selected');
+        }
+        
+        updateSummary();
+    }
+
+    function updateSummary() {
+        const summaryDiv = document.getElementById('selection-summary');
+        const list = document.getElementById('selected-seats-list');
+        const priceSpan = document.getElementById('total-price');
+        const btnNext = document.getElementById('btn-next');
+        
+        if (selectedSeats.size > 0) {
+            summaryDiv.style.display = 'block';
+            btnNext.disabled = false;
+            
+            list.innerHTML = '';
+            selectedSeats.forEach(id => {
+                const [r, m] = id.split('-');
+                const li = document.createElement('li');
+                li.className = 'small d-flex justify-content-between mb-1';
+                li.innerHTML = `<span>Rząd ${r}, Miejsce ${m}</span> <span class="text-muted">${basePrice.toFixed(2)} zł</span>`;
+                list.appendChild(li);
+            });
+            
+            priceSpan.innerText = (selectedSeats.size * basePrice).toFixed(2);
+        } else {
+            summaryDiv.style.display = 'none';
+            btnNext.disabled = true;
         }
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

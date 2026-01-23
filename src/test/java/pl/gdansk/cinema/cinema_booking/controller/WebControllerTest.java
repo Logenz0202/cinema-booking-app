@@ -9,6 +9,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.gdansk.cinema.cinema_booking.config.SecurityConfig;
 import pl.gdansk.cinema.cinema_booking.dto.FilmDto;
+import pl.gdansk.cinema.cinema_booking.dto.SeansDto;
 import pl.gdansk.cinema.cinema_booking.service.FilmService;
 import pl.gdansk.cinema.cinema_booking.service.SeansService;
 
@@ -31,6 +32,9 @@ class WebControllerTest {
 
     @MockitoBean
     private SeansService seansService;
+
+    @MockitoBean
+    private pl.gdansk.cinema.cinema_booking.service.RezerwacjaService rezerwacjaService;
 
     @MockitoBean
     private pl.gdansk.cinema.cinema_booking.service.CustomUserDetailsService customUserDetailsService;
@@ -91,5 +95,19 @@ class WebControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("lista-filmow"))
                 .andExpect(model().attributeExists("filmy"));
+    }
+
+    @Test
+    @WithMockUser
+    void shouldReturnReservationPage() throws Exception {
+        SeansDto seans = SeansDto.builder().id(1L).salaRzedy(10).salaMiejscaWRzedzie(15).build();
+        when(seansService.getSeansById(1L)).thenReturn(seans);
+        when(rezerwacjaService.getOccupiedSeats(1L)).thenReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/rezerwacja/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("sala"))
+                .andExpect(model().attributeExists("seans"))
+                .andExpect(model().attributeExists("occupiedSeats"));
     }
 }

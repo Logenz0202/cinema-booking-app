@@ -26,4 +26,5 @@ public class Seans {
     private LocalDateTime dataGodzina;
     private Double cenaNormalny;
     private Double cenaUlgowy;
+    private Double cenaRodzinny;
 }

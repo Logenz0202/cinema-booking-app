@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.gdansk.cinema.cinema_booking.dto.FilmDto;
 import pl.gdansk.cinema.cinema_booking.dto.SeansDto;
 import pl.gdansk.cinema.cinema_booking.service.FilmService;
+import pl.gdansk.cinema.cinema_booking.service.RezerwacjaService;
 import pl.gdansk.cinema.cinema_booking.service.SeansService;
 
 import java.net.URI;
@@ -28,6 +29,7 @@ public class WebController {
 
     private final FilmService filmService;
     private final SeansService seansService;
+    private final RezerwacjaService rezerwacjaService;
 
     @GetMapping("/")
     public String index(@RequestParam(required = false) String date, Model model) {
@@ -95,8 +97,11 @@ public class WebController {
 
     @GetMapping("/rezerwacja/{seansId}")
     public String reservation(@PathVariable Long seansId, Model model) {
-        // Tu docelowo pobieranie seansu i miejsc
-        model.addAttribute("seansId", seansId);
+        SeansDto seans = seansService.getSeansById(seansId);
+        List<String> occupiedSeats = rezerwacjaService.getOccupiedSeats(seansId);
+        
+        model.addAttribute("seans", seans);
+        model.addAttribute("occupiedSeats", occupiedSeats);
         return "sala";
     }
 

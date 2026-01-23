@@ -11,6 +11,8 @@ public interface SeansMapper {
     @Mapping(source = "sala.id", target = "salaId")
     @Mapping(source = "film.tytul", target = "filmTytul")
     @Mapping(source = "sala.numer", target = "salaNumer")
+    @Mapping(source = "sala.rzedy", target = "salaRzedy")
+    @Mapping(source = "sala.miejscaWRzedzie", target = "salaMiejscaWRzedzie")
     SeansDto toDto(Seans seans);
 
     @Mapping(source = "filmId", target = "film.id")
