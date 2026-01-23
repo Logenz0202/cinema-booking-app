@@ -39,6 +39,9 @@ class WebControllerTest {
     @MockitoBean
     private pl.gdansk.cinema.cinema_booking.service.CustomUserDetailsService customUserDetailsService;
 
+    @MockitoBean
+    private pl.gdansk.cinema.cinema_booking.service.CartService cartService;
+
     @Test
     @WithMockUser
     void shouldReturnIndexPage() throws Exception {

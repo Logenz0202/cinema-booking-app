@@ -140,8 +140,13 @@
 </div>
 
 <script th:inline="javascript">
-    const selectedSeats = new Set();
-    const basePrice = /*[[${seans.cenaNormalny}]]*/ 25.0;
+    const selectedSeats = new Map(); // seatId -> ticketType
+    const prices = {
+        'NORMALNY': /*[[${seans.cenaNormalny}]]*/ 25.0,
+        'ULGOWY': /*[[${seans.cenaUlgowy}]]*/ 20.0,
+        'RODZINNY': /*[[${seans.cenaRodzinny}]]*/ 60.0
+    };
+    const seansId = /*[[${seans.id}]]*/ 0;
 
     function toggleSeat(seat) {
         if (seat.classList.contains('occupied')) return;
@@ -154,10 +159,15 @@
             selectedSeats.delete(seatId);
             seat.classList.remove('selected');
         } else {
-            selectedSeats.add(seatId);
+            selectedSeats.set(seatId, 'NORMALNY');
             seat.classList.add('selected');
         }
         
+        updateSummary();
+    }
+
+    function changeTicketType(seatId, type) {
+        selectedSeats.set(seatId, type);
         updateSummary();
     }
 
@@ -172,20 +182,68 @@
             btnNext.disabled = false;
             
             list.innerHTML = '';
-            selectedSeats.forEach(id => {
+            let total = 0;
+            
+            selectedSeats.forEach((type, id) => {
                 const [r, m] = id.split('-');
+                const price = prices[type];
+                total += price;
+                
                 const li = document.createElement('li');
-                li.className = 'small d-flex justify-content-between mb-1';
-                li.innerHTML = `<span>Rząd ${r}, Miejsce ${m}</span> <span class="text-muted">${basePrice.toFixed(2)} zł</span>`;
+                li.className = 'small mb-3 p-2 border rounded bg-white shadow-sm';
+                li.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="fw-bold">Rząd ${r}, Miejsce ${m}</span>
+                        <span class="text-primary fw-bold">${price.toFixed(2)} zł</span>
+                    </div>
+                    <select class="form-select form-select-sm" onchange="changeTicketType('${id}', this.value)">
+                        <option value="NORMALNY" ${type === 'NORMALNY' ? 'selected' : ''}>Normalny (${prices.NORMALNY.toFixed(2)} zł)</option>
+                        <option value="ULGOWY" ${type === 'ULGOWY' ? 'selected' : ''}>Ulgowy (${prices.ULGOWY.toFixed(2)} zł)</option>
+                        <option value="RODZINNY" ${type === 'RODZINNY' ? 'selected' : ''}>Rodzinny (${prices.RODZINNY.toFixed(2)} zł)</option>
+                    </select>
+                `;
                 list.appendChild(li);
             });
             
-            priceSpan.innerText = (selectedSeats.size * basePrice).toFixed(2);
+            priceSpan.innerText = total.toFixed(2);
         } else {
             summaryDiv.style.display = 'none';
             btnNext.disabled = true;
         }
     }
+
+    document.getElementById('btn-next').addEventListener('click', function() {
+        const tickets = [];
+        selectedSeats.forEach((type, id) => {
+            const [r, m] = id.split('-');
+            tickets.push({
+                seansId: seansId,
+                rzad: parseInt(r),
+                miejsce: parseInt(m),
+                typBiletu: type,
+                cena: prices[type]
+            });
+        });
+
+        fetch('/rezerwacja/do-koszyka?seansId=' + seansId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Dodaj CSRF token jeśli Spring Security go wymaga (domyślnie przy POST jest włączony)
+                // Ale w SecurityConfig mamy csrf().disable()
+            },
+            body: JSON.stringify(tickets)
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            }
+            throw new Error('Błąd podczas dodawania do koszyka');
+        }).then(url => {
+            window.location.href = url;
+        }).catch(err => {
+            alert(err.message);
+        });
+    });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

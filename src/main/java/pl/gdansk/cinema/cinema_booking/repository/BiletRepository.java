@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface BiletRepository extends JpaRepository<Bilet, Long> {
     List<Bilet> findBySeansId(Long seansId);
+    boolean existsBySeansIdAndRzadAndMiejsce(Long seansId, Integer rzad, Integer miejsce);
 }

@@ -3,9 +3,7 @@ package pl.gdansk.cinema.cinema_booking.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.gdansk.cinema.cinema_booking.dto.FilmDto;
 import pl.gdansk.cinema.cinema_booking.dto.SeansDto;
 import pl.gdansk.cinema.cinema_booking.service.FilmService;
@@ -30,6 +28,7 @@ public class WebController {
     private final FilmService filmService;
     private final SeansService seansService;
     private final RezerwacjaService rezerwacjaService;
+    private final pl.gdansk.cinema.cinema_booking.service.CartService cartService;
 
     @GetMapping("/")
     public String index(@RequestParam(required = false) String date, Model model) {
@@ -103,6 +102,47 @@ public class WebController {
         model.addAttribute("seans", seans);
         model.addAttribute("occupiedSeats", occupiedSeats);
         return "sala";
+    }
+
+    @PostMapping("/rezerwacja/do-koszyka")
+    @org.springframework.web.bind.annotation.ResponseBody
+    public String addToCart(@RequestParam Long seansId, 
+                             @RequestBody List<pl.gdansk.cinema.cinema_booking.dto.BiletDto> bilety) {
+        cartService.addToCart(seansId, bilety);
+        return "/podsumowanie";
+    }
+
+    @GetMapping("/podsumowanie")
+    public String summary(Model model) {
+        if (cartService.getSeansId() == null) {
+            return "redirect:/";
+        }
+        model.addAttribute("items", cartService.getItems());
+        model.addAttribute("total", cartService.getTotalPrice());
+        model.addAttribute("seans", seansService.getSeansById(cartService.getSeansId()));
+        return "podsumowanie";
+    }
+
+    @PostMapping("/rezerwacja/finalizuj")
+    public String finalizeReservation(java.security.Principal principal, Model model) {
+        if (cartService.getSeansId() == null || principal == null) {
+            return "redirect:/";
+        }
+
+        try {
+            String ticketId = rezerwacjaService.finalizujRezerwacje(
+                    cartService.getSeansId(),
+                    cartService.getItems(),
+                    principal.getName()
+            );
+
+            model.addAttribute("ticketId", ticketId);
+            cartService.clearCart();
+            return "potwierdzenie";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "podsumowanie";
+        }
     }
 
     // Wydobywa ID z różnych form linków YouTube lub zwraca oryginalny przekazany identyfikator
