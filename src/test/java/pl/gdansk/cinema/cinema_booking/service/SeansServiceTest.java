@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -70,5 +71,37 @@ public class SeansServiceTest {
 
         // When & Then
         assertThrows(IllegalStateException.class, () -> seansService.createSeans(newSeansDto));
+    }
+
+    @Test
+    void shouldCreateSeansWhenNoOverlap() {
+        // Given
+        LocalDateTime start = LocalDateTime.now().plusDays(1);
+        SeansDto newSeansDto = SeansDto.builder()
+                .filmId(1L)
+                .salaId(1L)
+                .dataGodzina(start)
+                .build();
+
+        when(filmRepository.findById(1L)).thenReturn(Optional.of(film));
+        when(salaRepository.findById(1L)).thenReturn(Optional.of(sala));
+        when(seansRepository.findBySalaIdAndDataGodzinaBetween(any(), any(), any()))
+                .thenReturn(List.of());
+        when(seansMapper.toEntity(any())).thenReturn(new Seans());
+        when(seansRepository.save(any())).thenReturn(new Seans());
+        when(seansMapper.toDto(any())).thenReturn(newSeansDto);
+
+        // When
+        SeansDto created = seansService.createSeans(newSeansDto);
+
+        // Then
+        assertThat(created).isNotNull();
+    }
+
+    @Test
+    void shouldThrowExceptionWhenSeansNotFound() {
+        when(seansRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(pl.gdansk.cinema.cinema_booking.exception.ResourceNotFoundException.class, () -> seansService.getSeansById(1L));
     }
 }

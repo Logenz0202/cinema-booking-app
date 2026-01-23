@@ -25,15 +25,15 @@ public class ReportController {
     @GetMapping("/oblozenie/csv")
     @Operation(summary = "Pobierz raport obłożenia seansów w formacie CSV")
     public ResponseEntity<byte[]> downloadOccupancyReportCsv() {
-        List<Map<String, Object>> data = statisticsService.getSeansOccupancyReport();
+        var data = statisticsService.getSeansOccupancyReport();
         
         StringBuilder csv = new StringBuilder("ID;Film;Data;Zajete;Wszystkie\n");
-        for (Map<String, Object> row : data) {
-            csv.append(row.get("ID")).append(";")
-               .append(row.get("TYTUL")).append(";")
-               .append(row.get("DATA_GODZINA")).append(";")
-               .append(row.get("ZAJETE_MIEJSCA")).append(";")
-               .append(row.get("WSZYSTKIE_MIEJSCA")).append("\n");
+        for (var row : data) {
+            csv.append(row.getSeansId()).append(";")
+               .append(row.getTytul()).append(";")
+               .append(row.getDataGodzina()).append(";")
+               .append(row.getZajeteMiejsca()).append(";")
+               .append(row.getWszystkieMiejsca()).append("\n");
         }
 
         byte[] content = csv.toString().getBytes();

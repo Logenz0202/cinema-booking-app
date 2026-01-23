@@ -13,6 +13,11 @@
             <div class="card shadow border-0">
                 <div class="card-body p-4">
                     <h2 class="h3 card-title fw-bold mb-4">Twoje zamówienie</h2>
+
+                    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span th:text="${error}">Błąd!</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     
                     <div class="mb-4">
                         <h5 class="fw-bold" th:text="${seans.filmTytul}">Film</h5>

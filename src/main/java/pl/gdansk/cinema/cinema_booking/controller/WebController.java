@@ -160,6 +160,9 @@ public class WebController {
             return "potwierdzenie";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
+            model.addAttribute("items", cartService.getItems());
+            model.addAttribute("total", cartService.getTotalPrice());
+            model.addAttribute("seans", seansService.getSeansById(cartService.getSeansId()));
             return "podsumowanie";
         }
     }
