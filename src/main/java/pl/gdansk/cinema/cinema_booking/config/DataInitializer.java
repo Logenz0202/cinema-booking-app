@@ -43,8 +43,9 @@ public class DataInitializer implements CommandLineRunner {
         if (salaRepository.count() == 0) {
             Sala sala1 = Sala.builder().numer(1).rzedy(10).miejscaWRzedzie(15).opis("Sala Duża").build();
             Sala sala2 = Sala.builder().numer(2).rzedy(8).miejscaWRzedzie(12).opis("Sala Kameralna").build();
-            salaRepository.saveAll(List.of(sala1, sala2));
-            System.out.println(">>> Stworzono sale kinowe");
+            Sala sala3 = Sala.builder().numer(3).rzedy(6).miejscaWRzedzie(10).opis("Sala VIP").build();
+            salaRepository.saveAll(List.of(sala1, sala2, sala3));
+            System.out.println(">>> Stworzono sale kinowe (3)");
         }
 
         if (filmRepository.count() == 0) {
@@ -179,21 +180,29 @@ public class DataInitializer implements CommandLineRunner {
 
             // Dodanie seansów
             List<Sala> sale = salaRepository.findAll();
-            if (sale.size() >= 2) {
-                LocalDateTime today = LocalDateTime.now().withHour(10).withMinute(0).withSecond(0).withNano(0);
+            List<Film> filmy = filmRepository.findAll();
+            if (sale.size() >= 3 && filmy.size() >= 7) {
+                java.util.List<Seans> seanseToSave = new java.util.ArrayList<>();
+                for (int i = 0; i < 7; i++) {
+                    LocalDateTime day = LocalDateTime.now().plusDays(i).withHour(10).withMinute(0).withSecond(0).withNano(0);
 
-                seansRepository.saveAll(List.of(
-                    Seans.builder().film(film1).sala(sale.get(0)).dataGodzina(today.plusHours(4)).cenaNormalny(25.0).cenaUlgowy(20.0).build(),
-                    Seans.builder().film(film1).sala(sale.get(0)).dataGodzina(today.plusHours(8)).cenaNormalny(25.0).cenaUlgowy(20.0).build(),
-                    Seans.builder().film(film2).sala(sale.get(1)).dataGodzina(today.plusHours(2)).cenaNormalny(22.0).cenaUlgowy(18.0).build(),
-                    Seans.builder().film(film2).sala(sale.get(1)).dataGodzina(today.plusHours(5)).cenaNormalny(22.0).cenaUlgowy(18.0).build(),
-                    Seans.builder().film(film3).sala(sale.get(1)).dataGodzina(today).cenaNormalny(20.0).cenaUlgowy(15.0).build(),
-                    Seans.builder().film(film4).sala(sale.get(0)).dataGodzina(today.plusHours(10)).cenaNormalny(28.0).cenaUlgowy(22.0).build(),
-                    Seans.builder().film(film5).sala(sale.get(1)).dataGodzina(today.plusHours(11)).cenaNormalny(25.0).cenaUlgowy(20.0).build(),
-                    Seans.builder().film(film6).sala(sale.get(0)).dataGodzina(today.plusHours(1)).cenaNormalny(20.0).cenaUlgowy(15.0).build(),
-                    Seans.builder().film(film7).sala(sale.get(0)).dataGodzina(today.plusHours(13)).cenaNormalny(25.0).cenaUlgowy(20.0).build()
-                ));
-                System.out.println(">>> Stworzono przykładowe seanse");
+                    // Sala 1
+                    seanseToSave.add(Seans.builder().film(filmy.get(0)).sala(sale.get(0)).dataGodzina(day.plusHours(0)).cenaNormalny(25.0).cenaUlgowy(20.0).build());
+                    seanseToSave.add(Seans.builder().film(filmy.get(3)).sala(sale.get(0)).dataGodzina(day.plusHours(4)).cenaNormalny(28.0).cenaUlgowy(22.0).build());
+                    seanseToSave.add(Seans.builder().film(filmy.get(5)).sala(sale.get(0)).dataGodzina(day.plusHours(8)).cenaNormalny(20.0).cenaUlgowy(15.0).build());
+                    seanseToSave.add(Seans.builder().film(filmy.get(6)).sala(sale.get(0)).dataGodzina(day.plusHours(12)).cenaNormalny(25.0).cenaUlgowy(20.0).build());
+
+                    // Sala 2
+                    seanseToSave.add(Seans.builder().film(filmy.get(1)).sala(sale.get(1)).dataGodzina(day.plusHours(1)).cenaNormalny(22.0).cenaUlgowy(18.0).build());
+                    seanseToSave.add(Seans.builder().film(filmy.get(2)).sala(sale.get(1)).dataGodzina(day.plusHours(5)).cenaNormalny(20.0).cenaUlgowy(15.0).build());
+                    seanseToSave.add(Seans.builder().film(filmy.get(4)).sala(sale.get(1)).dataGodzina(day.plusHours(9)).cenaNormalny(25.0).cenaUlgowy(20.0).build());
+
+                    // Sala 3
+                    seanseToSave.add(Seans.builder().film(filmy.get(0)).sala(sale.get(2)).dataGodzina(day.plusHours(2)).cenaNormalny(30.0).cenaUlgowy(25.0).build());
+                    seanseToSave.add(Seans.builder().film(filmy.get(3)).sala(sale.get(2)).dataGodzina(day.plusHours(6)).cenaNormalny(35.0).cenaUlgowy(30.0).build());
+                }
+                seansRepository.saveAll(seanseToSave);
+                System.out.println(">>> Stworzono repertuar seansów na 7 dni");
             }
         }
     }

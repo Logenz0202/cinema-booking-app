@@ -48,6 +48,22 @@ public class SeansService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<SeansDto> getSeanseByFilmIdAndDate(Long filmId, LocalDateTime startOfDay) {
+        LocalDateTime endOfDay = startOfDay.withHour(23).withMinute(59).withSecond(59);
+        return seansRepository.findByFilmIdAndDataGodzinaBetween(filmId, startOfDay, endOfDay).stream()
+                .map(seansMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<SeansDto> getSeanseByDate(LocalDateTime startOfDay) {
+        LocalDateTime endOfDay = startOfDay.withHour(23).withMinute(59).withSecond(59);
+        return seansRepository.findByDataGodzinaBetween(startOfDay, endOfDay).stream()
+                .map(seansMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public SeansDto createSeans(SeansDto seansDto) {
         validateSeans(seansDto);

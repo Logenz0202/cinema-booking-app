@@ -14,6 +14,7 @@ import pl.gdansk.cinema.cinema_booking.service.SeansService;
 
 import java.util.Collections;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -37,12 +38,25 @@ class WebControllerTest {
     @Test
     @WithMockUser
     void shouldReturnIndexPage() throws Exception {
-        when(filmService.getAllFilmy()).thenReturn(Collections.emptyList());
+        when(seansService.getSeanseByDate(any())).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
-                .andExpect(model().attributeExists("filmy"));
+                .andExpect(model().attributeExists("filmy"))
+                .andExpect(model().attributeExists("days"))
+                .andExpect(model().attributeExists("selectedDate"));
+    }
+
+    @Test
+    @WithMockUser
+    void shouldReturnIndexPageWithSpecificDate() throws Exception {
+        when(seansService.getSeanseByDate(any())).thenReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/").param("date", "2026-01-25"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("index"))
+                .andExpect(model().attribute("selectedDate", "2026-01-25"));
     }
 
     @Test
@@ -63,8 +77,19 @@ class WebControllerTest {
 
         mockMvc.perform(get("/film/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("filmy_simple"))
+                .andExpect(view().name("filmy"))
                 .andExpect(model().attributeExists("film"))
                 .andExpect(model().attribute("film", film));
+    }
+
+    @Test
+    @WithMockUser
+    void shouldReturnFilmListPage() throws Exception {
+        when(filmService.getAllFilmy()).thenReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/filmy-lista"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("lista-filmow"))
+                .andExpect(model().attributeExists("filmy"));
     }
 }

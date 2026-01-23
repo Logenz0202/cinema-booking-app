@@ -31,16 +31,9 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-dark mb-4 shadow">
-    <div class="container">
-        <a class="navbar-brand font-weight-bold" href="/">Cinema Booking</a>
-        <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="/swagger-ui.html">API Docs</a>
-        </div>
-    </div>
-</nav>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
 
-<div class="container text-center">
+<div class="container text-center mt-4">
     <h1>Wybierz miejsca</h1>
     <div class="screen">EKRAN</div>
     
