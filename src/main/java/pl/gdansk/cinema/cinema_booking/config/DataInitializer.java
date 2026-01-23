@@ -29,15 +29,25 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (uzytkownikRepository.findByEmail("admin@kino.pl").isEmpty()) {
+        if (uzytkownikRepository.count() == 0) {
+            // Admin
             Uzytkownik admin = Uzytkownik.builder()
-                    .email("admin@kino.pl")
+                    .username("admin")
                     .haslo(passwordEncoder.encode("admin"))
                     .role(Set.of("ADMIN", "USER"))
                     .build();
-
             uzytkownikRepository.save(admin);
-            System.out.println(">>> Stworzono domyślnego użytkownika: admin@kino.pl / admin");
+
+            // Users
+            for (int i = 1; i <= 3; i++) {
+                Uzytkownik user = Uzytkownik.builder()
+                        .username("user" + i)
+                        .haslo(passwordEncoder.encode("user"))
+                        .role(Set.of("USER"))
+                        .build();
+                uzytkownikRepository.save(user);
+            }
+            System.out.println(">>> Stworzono konta testowe: admin/admin, user1-3/user");
         }
 
         if (salaRepository.count() == 0) {

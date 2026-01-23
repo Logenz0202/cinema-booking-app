@@ -5,5 +5,5 @@ import pl.gdansk.cinema.cinema_booking.entity.Uzytkownik;
 import java.util.Optional;
 
 public interface UzytkownikRepository extends JpaRepository<Uzytkownik, Long> {
-    Optional<Uzytkownik> findByEmail(String email);
+    Optional<Uzytkownik> findByUsername(String username);
 }

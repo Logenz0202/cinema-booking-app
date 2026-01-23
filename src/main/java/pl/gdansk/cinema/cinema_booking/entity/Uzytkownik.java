@@ -16,7 +16,7 @@ public class Uzytkownik {
     private Long id;
 
     @Column(unique = true)
-    private String email;
+    private String username;
     private String haslo;
 
     @ElementCollection(fetch = FetchType.EAGER)
