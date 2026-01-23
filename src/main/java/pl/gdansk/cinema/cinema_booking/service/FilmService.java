@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FilmService {
     private final FilmRepository filmRepository;
+    private final pl.gdansk.cinema.cinema_booking.repository.SeansRepository seansRepository;
     private final FilmMapper filmMapper;
 
     @Transactional(readOnly = true)
@@ -80,6 +81,11 @@ public class FilmService {
         if (!filmRepository.existsById(id)) {
             throw new ResourceNotFoundException("Film nie znaleziony o id: " + id);
         }
+        // Najpierw usuwamy wszystkie seanse powiązane z filmem
+        // Kaskada w Seans zajmie się biletami i rezerwacjami
+        List<pl.gdansk.cinema.cinema_booking.entity.Seans> seanse = seansRepository.findByFilmId(id);
+        seansRepository.deleteAll(seanse);
+        
         filmRepository.deleteById(id);
     }
 }

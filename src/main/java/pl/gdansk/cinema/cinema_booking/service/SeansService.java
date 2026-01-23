@@ -23,6 +23,8 @@ public class SeansService {
     private final SeansRepository seansRepository;
     private final FilmRepository filmRepository;
     private final SalaRepository salaRepository;
+    private final pl.gdansk.cinema.cinema_booking.repository.BiletRepository biletRepository;
+    private final pl.gdansk.cinema.cinema_booking.repository.RezerwacjaRepository rezerwacjaRepository;
     private final SeansMapper seansMapper;
 
     private static final int CLEANING_TIME_MINUTES = 15;
@@ -106,6 +108,10 @@ public class SeansService {
         if (!seansRepository.existsById(id)) {
             throw new ResourceNotFoundException("Nie znaleziono seansu o ID: " + id);
         }
+        // Najpierw bilety i rezerwacje
+        biletRepository.deleteAll(biletRepository.findBySeansId(id));
+        rezerwacjaRepository.deleteAll(rezerwacjaRepository.findBySeansId(id));
+        
         seansRepository.deleteById(id);
     }
 

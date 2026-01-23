@@ -10,4 +10,5 @@ public interface SeansRepository extends JpaRepository<Seans, Long> {
     List<Seans> findBySalaIdAndDataGodzinaBetween(Long salaId, LocalDateTime start, LocalDateTime end);
     List<Seans> findByDataGodzinaBetween(LocalDateTime start, LocalDateTime end);
     List<Seans> findByFilmIdAndDataGodzinaBetween(Long filmId, LocalDateTime start, LocalDateTime end);
+    List<Seans> findByFilmId(Long filmId);
 }

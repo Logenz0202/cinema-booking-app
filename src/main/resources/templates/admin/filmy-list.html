@@ -35,7 +35,7 @@
                 <td th:text="${film.id}">1</td>
                 <td>
                     <div class="fw-semibold" th:text="${film.tytul}">Tytul</div>
-                    <div class="text-muted small" th:text="${film.opis}">Opis</div>
+                    <div class="text-muted small" th:text="${#strings.abbreviate(film.opis, 80)}" th:title="${film.opis}">Opis</div>
                 </td>
                 <td th:text="${film.gatunek}">Gatunek</td>
                 <td th:text="${film.wiek}">12</td>

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface RezerwacjaRepository extends JpaRepository<Rezerwacja, Long> {
     List<Rezerwacja> findByUzytkownikUsername(String username);
+    List<Rezerwacja> findBySeansId(Long seansId);
 }
