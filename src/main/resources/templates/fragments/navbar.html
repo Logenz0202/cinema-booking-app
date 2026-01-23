@@ -13,6 +13,7 @@
                 <li class="nav-item"><a class="nav-link" href="/filmy-lista">Filmy</a></li>
             </ul>
             <div class="navbar-nav ms-auto">
+                <a sec:authorize="hasRole('ADMIN')" class="nav-link" href="/admin/filmy">Admin Panel</a>
                 <a sec:authorize="hasRole('ADMIN')" class="nav-link" href="/swagger-ui.html">API Docs</a>
                 
                 <div sec:authorize="isAuthenticated()" class="nav-item dropdown">

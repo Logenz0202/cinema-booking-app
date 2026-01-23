@@ -20,6 +20,7 @@ public class Film {
     private Integer wiek;
     private String rezyser;
     private String obsada;
+    private String opis;
     private String obrazUrl;
     private Integer czasTrwania; // w minutach
 

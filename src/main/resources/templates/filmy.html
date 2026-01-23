@@ -21,6 +21,7 @@
             </p>
             <p><strong>Reżyser:</strong> <span th:text="${film.rezyser}"></span></p>
             <p><strong>Obsada:</strong> <span th:text="${film.obsada}"></span></p>
+            <p th:if="${film.opis}"><strong>Opis:</strong> <span th:text="${film.opis}"></span></p>
             
             <div th:if="${film.trailerYoutubeId}" class="mt-4">
                 <h3 class="h5 mb-3">Zwiastun</h3>

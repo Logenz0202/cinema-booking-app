@@ -57,6 +57,7 @@ public class FilmService {
         existingFilm.setWiek(filmDto.getWiek());
         existingFilm.setRezyser(filmDto.getRezyser());
         existingFilm.setObsada(filmDto.getObsada());
+        existingFilm.setOpis(filmDto.getOpis());
         existingFilm.setCzasTrwania(filmDto.getCzasTrwania());
         existingFilm.setObrazUrl(filmDto.getObrazUrl());
         existingFilm.setTrailerYoutubeId(filmDto.getTrailerYoutubeId());

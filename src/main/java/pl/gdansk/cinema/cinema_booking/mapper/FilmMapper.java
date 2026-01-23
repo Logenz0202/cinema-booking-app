@@ -11,6 +11,7 @@ public interface FilmMapper {
     @Mapping(target = "czasTrwania", source = "czasTrwania")
     @Mapping(target = "trailerYoutubeId", source = "trailerYoutubeId")
     @Mapping(target = "galeriaUrls", source = "galeriaUrls")
+    @Mapping(target = "opis", source = "opis")
     @Mapping(target = "seanse", ignore = true)
     FilmDto toDto(Film film);
 
@@ -18,5 +19,6 @@ public interface FilmMapper {
     @Mapping(target = "czasTrwania", source = "czasTrwania")
     @Mapping(target = "trailerYoutubeId", source = "trailerYoutubeId")
     @Mapping(target = "galeriaUrls", source = "galeriaUrls")
+    @Mapping(target = "opis", source = "opis")
     Film toEntity(FilmDto filmDto);
 }
