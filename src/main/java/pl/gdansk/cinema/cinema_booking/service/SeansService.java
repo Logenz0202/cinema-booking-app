@@ -43,7 +43,7 @@ public class SeansService {
 
     @Transactional(readOnly = true)
     public List<SeansDto> getSeanseByFilmId(Long filmId) {
-        return seansRepository.findByFilmIdAndDataGodzinaAfter(filmId, LocalDateTime.now().minusHours(1)).stream()
+        return seansRepository.findByFilmIdAndDataGodzinaAfterOrderByDataGodzinaAsc(filmId, LocalDateTime.now().toLocalDate().atStartOfDay()).stream()
                 .map(seansMapper::toDto)
                 .collect(Collectors.toList());
     }

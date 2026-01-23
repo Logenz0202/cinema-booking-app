@@ -86,6 +86,7 @@ class WebControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("filmy"))
                 .andExpect(model().attributeExists("film"))
+                .andExpect(model().attributeExists("repertuarDays"))
                 .andExpect(model().attribute("film", film));
     }
 

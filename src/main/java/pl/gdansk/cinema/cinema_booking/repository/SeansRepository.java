@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SeansRepository extends JpaRepository<Seans, Long> {
-    List<Seans> findByFilmIdAndDataGodzinaAfter(Long filmId, LocalDateTime data);
+    List<Seans> findByFilmIdAndDataGodzinaAfterOrderByDataGodzinaAsc(Long filmId, LocalDateTime data);
     List<Seans> findBySalaIdAndDataGodzinaBetween(Long salaId, LocalDateTime start, LocalDateTime end);
     List<Seans> findByDataGodzinaBetween(LocalDateTime start, LocalDateTime end);
     List<Seans> findByFilmIdAndDataGodzinaBetween(Long filmId, LocalDateTime start, LocalDateTime end);

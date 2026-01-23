@@ -82,15 +82,34 @@ public class WebController {
 
     @GetMapping("/film/{id}")
     public String filmDetails(@PathVariable Long id, Model model) {
-        // Pobierz DTO filmu i ustaw seanse - przydane na stronie szczegółów
         FilmDto film = filmService.getFilmById(id);
-        film.setSeanse(seansService.getSeanseByFilmId(id));
-        // Normalizuj trailerYoutubeId: jeśli ktoś podał pełny URL, wydobądź samo ID
+        List<SeansDto> allUpcoming = seansService.getSeanseByFilmId(id);
+
+        // Grupowanie seansów według daty
+        Map<LocalDate, List<SeansDto>> seanseByDate = allUpcoming.stream()
+                .collect(Collectors.groupingBy(s -> s.getDataGodzina().toLocalDate()));
+
+        // Przygotowanie listy 7 dni z przypisanymi seansami
+        List<Map<String, Object>> days = new ArrayList<>();
+        DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("dd.MM");
+        DateTimeFormatter nameFormatter = DateTimeFormatter.ofPattern("EEE");
+
+        for (int i = 0; i < 7; i++) {
+            LocalDate d = LocalDate.now().plusDays(i);
+            days.add(Map.of(
+                    "dayName", i == 0 ? "Dziś" : d.format(nameFormatter),
+                    "displayDate", d.format(dayFormatter),
+                    "seanse", seanseByDate.getOrDefault(d, new ArrayList<>())
+            ));
+        }
+
         if (film.getTrailerYoutubeId() != null) {
             film.setTrailerYoutubeId(extractYoutubeId(film.getTrailerYoutubeId()));
         }
+
         model.addAttribute("film", film);
-        // Zwracamy pełny widok szczegółów (filmy.html) z galerią i modalem
+        model.addAttribute("repertuarDays", days);
+        model.addAttribute("now", LocalDateTime.now());
         return "filmy";
     }
 
