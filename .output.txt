@@ -1,0 +1,2072 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] ------------------< pl.gdansk.cinema:cinema-booking >-------------------
+[INFO] Building cinema-booking 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- resources:3.3.1:resources (default-resources) @ cinema-booking ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 49 resources from src\main\resources to target\classes
+[INFO]
+[INFO] --- compiler:3.14.1:compile (default-compile) @ cinema-booking ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO]
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ cinema-booking ---
+[INFO] skip non existing resourceDirectory D:\Foldery\szkola\studia\UG\sem 5\przemyslowe\cinema-booking-app\src\test\resources
+[INFO]
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ cinema-booking ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 8 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO]
+[INFO] --- surefire:3.5.4:test (default-test) @ cinema-booking ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running pl.gdansk.cinema.cinema_booking.OpenApiCheckTest
+23:07:33.796 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [pl.gdansk.cinema.cinema_booking.OpenApiCheckTest]: OpenApiCheckTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+23:07:33.894 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration pl.gdansk.cinema.cinema_booking.CinemaBookingApplication for test class pl.gdansk.cinema.cinema_booking.OpenApiCheckTest
+23:07:34.014 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.5.9)
+2026-01-23T23:07:34.259+01:00  INFO 10936 --- [           main] p.g.c.cinema_booking.OpenApiCheckTest    : Starting OpenApiCheckTest using Java 21.0.2 with PID 10936 (started by szyme in D:\Foldery\szkola\studia\UG\sem 5\przemyslowe\cinema-booking-app)
+2026-01-23T23:07:34.260+01:00 DEBUG 10936 --- [           main] p.g.c.cinema_booking.OpenApiCheckTest    : Running with Spring Boot v3.5.9, Spring v6.2.15
+2026-01-23T23:07:34.261+01:00  INFO 10936 --- [           main] p.g.c.cinema_booking.OpenApiCheckTest    : No active profile set, falling back to 1 default profile: "default"
+2026-01-23T23:07:34.950+01:00  INFO 10936 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-23T23:07:35.007+01:00  INFO 10936 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 7 JPA repository interfaces.
+2026-01-23T23:07:35.416+01:00  INFO 10936 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-23T23:07:35.459+01:00  INFO 10936 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-01-23T23:07:35.490+01:00  INFO 10936 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-23T23:07:35.728+01:00  INFO 10936 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-23T23:07:35.752+01:00  INFO 10936 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-23T23:07:35.889+01:00  INFO 10936 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:cinemadb user=SA
+2026-01-23T23:07:35.890+01:00  INFO 10936 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-23T23:07:35.930+01:00  INFO 10936 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+        Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+        Database driver: undefined/unknown
+        Database version: 2.3.232
+        Autocommit mode: undefined/unknown
+        Isolation level: undefined/unknown
+        Minimum pool size: undefined/unknown
+        Maximum pool size: undefined/unknown
+2026-01-23T23:07:36.649+01:00  INFO 10936 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-23T23:07:36.685+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    create table bilet (
+        id bigint generated by default as identity,
+        cena float(53),
+        miejsce integer,
+        rzad integer,
+        typ_biletu enum ('NORMALNY','RODZINNY','ULGOWY'),
+        rezerwacja_id bigint,
+        seans_id bigint,
+        primary key (id)
+    )
+Hibernate:
+    create table bilet (
+        id bigint generated by default as identity,
+        cena float(53),
+        miejsce integer,
+        rzad integer,
+        typ_biletu enum ('NORMALNY','RODZINNY','ULGOWY'),
+        rezerwacja_id bigint,
+        seans_id bigint,
+        primary key (id)
+    )
+2026-01-23T23:07:36.691+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    create table film (
+        id bigint generated by default as identity,
+        czas_trwania integer,
+        gatunek varchar(255),
+        obraz_url varchar(255),
+        obsada varchar(255),
+        rezyser varchar(255),
+        trailer_youtube_id varchar(255),
+        tytul varchar(255),
+        wiek integer,
+        primary key (id)
+    )
+Hibernate:
+    create table film (
+        id bigint generated by default as identity,
+        czas_trwania integer,
+        gatunek varchar(255),
+        obraz_url varchar(255),
+        obsada varchar(255),
+        rezyser varchar(255),
+        trailer_youtube_id varchar(255),
+        tytul varchar(255),
+        wiek integer,
+        primary key (id)
+    )
+2026-01-23T23:07:36.692+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    create table film_galeria (
+        film_id bigint not null,
+        image_url varchar(255)
+    )
+Hibernate:
+    create table film_galeria (
+        film_id bigint not null,
+        image_url varchar(255)
+    )
+2026-01-23T23:07:36.692+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    create table miejsce (
+        id bigint generated by default as identity,
+        numer integer,
+        rzad integer,
+        status enum ('WOLNE','ZAJETE'),
+        seans_id bigint,
+        primary key (id)
+    )
+Hibernate:
+    create table miejsce (
+        id bigint generated by default as identity,
+        numer integer,
+        rzad integer,
+        status enum ('WOLNE','ZAJETE'),
+        seans_id bigint,
+        primary key (id)
+    )
+2026-01-23T23:07:36.693+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    create table rezerwacja (
+        id bigint generated by default as identity,
+        data_rezerwacji timestamp(6),
+        numer_rezerwacji varchar(255),
+        status enum ('ANULOWANA','OCZEKUJACA','OPLACONA'),
+        seans_id bigint,
+        uzytkownik_id bigint,
+        primary key (id)
+    )
+Hibernate:
+    create table rezerwacja (
+        id bigint generated by default as identity,
+        data_rezerwacji timestamp(6),
+        numer_rezerwacji varchar(255),
+        status enum ('ANULOWANA','OCZEKUJACA','OPLACONA'),
+        seans_id bigint,
+        uzytkownik_id bigint,
+        primary key (id)
+    )
+2026-01-23T23:07:36.694+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    create table sala (
+        id bigint generated by default as identity,
+        miejscawrzedzie integer,
+        numer integer,
+        opis varchar(255),
+        rzedy integer,
+        primary key (id)
+    )
+Hibernate:
+    create table sala (
+        id bigint generated by default as identity,
+        miejscawrzedzie integer,
+        numer integer,
+        opis varchar(255),
+        rzedy integer,
+        primary key (id)
+    )
+2026-01-23T23:07:36.695+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    create table seans (
+        id bigint generated by default as identity,
+        cena_normalny float(53),
+        cena_rodzinny float(53),
+        cena_ulgowy float(53),
+        data_godzina timestamp(6),
+        film_id bigint,
+        sala_id bigint,
+        primary key (id)
+    )
+Hibernate:
+    create table seans (
+        id bigint generated by default as identity,
+        cena_normalny float(53),
+        cena_rodzinny float(53),
+        cena_ulgowy float(53),
+        data_godzina timestamp(6),
+        film_id bigint,
+        sala_id bigint,
+        primary key (id)
+    )
+2026-01-23T23:07:36.696+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    create table uzytkownik (
+        id bigint generated by default as identity,
+        haslo varchar(255),
+        username varchar(255),
+        primary key (id)
+    )
+Hibernate:
+    create table uzytkownik (
+        id bigint generated by default as identity,
+        haslo varchar(255),
+        username varchar(255),
+        primary key (id)
+    )
+2026-01-23T23:07:36.697+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    create table uzytkownik_role (
+        uzytkownik_id bigint not null,
+        rola varchar(255)
+    )
+Hibernate:
+    create table uzytkownik_role (
+        uzytkownik_id bigint not null,
+        rola varchar(255)
+    )
+2026-01-23T23:07:36.697+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    alter table if exists uzytkownik
+       drop constraint if exists UKnnf0fpjq6slpyj3gusyqo48fr
+Hibernate:
+    alter table if exists uzytkownik
+       drop constraint if exists UKnnf0fpjq6slpyj3gusyqo48fr
+2026-01-23T23:07:36.698+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    alter table if exists uzytkownik
+       add constraint UKnnf0fpjq6slpyj3gusyqo48fr unique (username)
+Hibernate:
+    alter table if exists uzytkownik
+       add constraint UKnnf0fpjq6slpyj3gusyqo48fr unique (username)
+2026-01-23T23:07:36.699+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    alter table if exists bilet
+       add constraint FK6hldnpxhkywd1pe0m9eiu4nw5
+       foreign key (rezerwacja_id)
+       references rezerwacja
+Hibernate:
+    alter table if exists bilet
+       add constraint FK6hldnpxhkywd1pe0m9eiu4nw5
+       foreign key (rezerwacja_id)
+       references rezerwacja
+2026-01-23T23:07:36.703+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    alter table if exists bilet
+       add constraint FKpt56q3d8acobw2fr4shqvmwxp
+       foreign key (seans_id)
+       references seans
+Hibernate:
+    alter table if exists bilet
+       add constraint FKpt56q3d8acobw2fr4shqvmwxp
+       foreign key (seans_id)
+       references seans
+2026-01-23T23:07:36.704+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    alter table if exists film_galeria
+       add constraint FKp8rud0nes6dq9tcgr2jw79xr6
+       foreign key (film_id)
+       references film
+Hibernate:
+    alter table if exists film_galeria
+       add constraint FKp8rud0nes6dq9tcgr2jw79xr6
+       foreign key (film_id)
+       references film
+2026-01-23T23:07:36.705+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    alter table if exists miejsce
+       add constraint FKgdo158131m5579qmysokqaysg
+       foreign key (seans_id)
+       references seans
+Hibernate:
+    alter table if exists miejsce
+       add constraint FKgdo158131m5579qmysokqaysg
+       foreign key (seans_id)
+       references seans
+2026-01-23T23:07:36.706+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    alter table if exists rezerwacja
+       add constraint FKf8a7ai3xdur7i9l2d83tgrrnp
+       foreign key (seans_id)
+       references seans
+Hibernate:
+    alter table if exists rezerwacja
+       add constraint FKf8a7ai3xdur7i9l2d83tgrrnp
+       foreign key (seans_id)
+       references seans
+2026-01-23T23:07:36.706+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    alter table if exists rezerwacja
+       add constraint FKfmb2b7v9swk3dmaxi366p2l6w
+       foreign key (uzytkownik_id)
+       references uzytkownik
+Hibernate:
+    alter table if exists rezerwacja
+       add constraint FKfmb2b7v9swk3dmaxi366p2l6w
+       foreign key (uzytkownik_id)
+       references uzytkownik
+2026-01-23T23:07:36.708+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    alter table if exists seans
+       add constraint FKlsu8tb8n7alg2vohr8a6plqal
+       foreign key (film_id)
+       references film
+Hibernate:
+    alter table if exists seans
+       add constraint FKlsu8tb8n7alg2vohr8a6plqal
+       foreign key (film_id)
+       references film
+2026-01-23T23:07:36.709+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    alter table if exists seans
+       add constraint FKo4xj7npa3de0t1rn520lwnwm7
+       foreign key (sala_id)
+       references sala
+Hibernate:
+    alter table if exists seans
+       add constraint FKo4xj7npa3de0t1rn520lwnwm7
+       foreign key (sala_id)
+       references sala
+2026-01-23T23:07:36.710+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    alter table if exists uzytkownik_role
+       add constraint FK960hlyf1ucnjeoc971jcqxjr8
+       foreign key (uzytkownik_id)
+       references uzytkownik
+Hibernate:
+    alter table if exists uzytkownik_role
+       add constraint FK960hlyf1ucnjeoc971jcqxjr8
+       foreign key (uzytkownik_id)
+       references uzytkownik
+2026-01-23T23:07:36.712+01:00  INFO 10936 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-23T23:07:37.160+01:00  WARN 10936 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-23T23:07:37.181+01:00  INFO 10936 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-01-23T23:07:37.346+01:00  INFO 10936 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2026-01-23T23:07:37.698+01:00  INFO 10936 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:cinemadb'
+2026-01-23T23:07:37.756+01:00  INFO 10936 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-01-23T23:07:37.757+01:00  INFO 10936 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-01-23T23:07:37.758+01:00  INFO 10936 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-01-23T23:07:37.781+01:00  INFO 10936 --- [           main] p.g.c.cinema_booking.OpenApiCheckTest    : Started OpenApiCheckTest in 3.775 seconds (process running for 4.538)
+2026-01-23T23:07:38.011+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    select
+        count(*)
+    from
+        uzytkownik u1_0
+Hibernate:
+    select
+        count(*)
+    from
+        uzytkownik u1_0
+2026-01-23T23:07:38.105+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        uzytkownik
+        (haslo, username, id)
+    values
+        (?, ?, default)
+Hibernate:
+    insert
+    into
+        uzytkownik
+        (haslo, username, id)
+    values
+        (?, ?, default)
+2026-01-23T23:07:38.122+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        uzytkownik_role
+        (uzytkownik_id, rola)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        uzytkownik_role
+        (uzytkownik_id, rola)
+    values
+        (?, ?)
+2026-01-23T23:07:38.122+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        uzytkownik_role
+        (uzytkownik_id, rola)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        uzytkownik_role
+        (uzytkownik_id, rola)
+    values
+        (?, ?)
+2026-01-23T23:07:38.183+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        uzytkownik
+        (haslo, username, id)
+    values
+        (?, ?, default)
+Hibernate:
+    insert
+    into
+        uzytkownik
+        (haslo, username, id)
+    values
+        (?, ?, default)
+2026-01-23T23:07:38.184+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        uzytkownik_role
+        (uzytkownik_id, rola)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        uzytkownik_role
+        (uzytkownik_id, rola)
+    values
+        (?, ?)
+2026-01-23T23:07:38.245+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        uzytkownik
+        (haslo, username, id)
+    values
+        (?, ?, default)
+Hibernate:
+    insert
+    into
+        uzytkownik
+        (haslo, username, id)
+    values
+        (?, ?, default)
+2026-01-23T23:07:38.246+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        uzytkownik_role
+        (uzytkownik_id, rola)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        uzytkownik_role
+        (uzytkownik_id, rola)
+    values
+        (?, ?)
+2026-01-23T23:07:38.306+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        uzytkownik
+        (haslo, username, id)
+    values
+        (?, ?, default)
+Hibernate:
+    insert
+    into
+        uzytkownik
+        (haslo, username, id)
+    values
+        (?, ?, default)
+2026-01-23T23:07:38.307+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        uzytkownik_role
+        (uzytkownik_id, rola)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        uzytkownik_role
+        (uzytkownik_id, rola)
+    values
+        (?, ?)
+>>> Stworzono konta testowe: admin/admin, user1-3/user
+2026-01-23T23:07:38.309+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    select
+        count(*)
+    from
+        sala s1_0
+Hibernate:
+    select
+        count(*)
+    from
+        sala s1_0
+2026-01-23T23:07:38.310+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        sala
+        (miejscawrzedzie, numer, opis, rzedy, id)
+    values
+        (?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        sala
+        (miejscawrzedzie, numer, opis, rzedy, id)
+    values
+        (?, ?, ?, ?, default)
+2026-01-23T23:07:38.311+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        sala
+        (miejscawrzedzie, numer, opis, rzedy, id)
+    values
+        (?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        sala
+        (miejscawrzedzie, numer, opis, rzedy, id)
+    values
+        (?, ?, ?, ?, default)
+2026-01-23T23:07:38.311+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        sala
+        (miejscawrzedzie, numer, opis, rzedy, id)
+    values
+        (?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        sala
+        (miejscawrzedzie, numer, opis, rzedy, id)
+    values
+        (?, ?, ?, ?, default)
+>>> Stworzono sale kinowe (3)
+2026-01-23T23:07:38.313+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    select
+        count(*)
+    from
+        film f1_0
+Hibernate:
+    select
+        count(*)
+    from
+        film f1_0
+2026-01-23T23:07:38.315+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.316+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.316+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.317+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.317+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.318+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.318+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        film
+        (czas_trwania, gatunek, obraz_url, obsada, rezyser, trailer_youtube_id, tytul, wiek, id)
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.319+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.319+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.319+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.320+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.320+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.320+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.320+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.320+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.321+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.321+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.321+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.321+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.321+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.322+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.322+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.322+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.322+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.322+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.323+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.323+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.323+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.323+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.323+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.324+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.324+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.324+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.324+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.324+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.325+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.325+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.325+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.325+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.325+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.326+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+2026-01-23T23:07:38.326+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+Hibernate:
+    insert
+    into
+        film_galeria
+        (film_id, image_url)
+    values
+        (?, ?)
+>>> Stworzono pe�ny repertuar film�w (7 pozycji)
+2026-01-23T23:07:38.336+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    select
+        s1_0.id,
+        s1_0.miejscawrzedzie,
+        s1_0.numer,
+        s1_0.opis,
+        s1_0.rzedy
+    from
+        sala s1_0
+Hibernate:
+    select
+        s1_0.id,
+        s1_0.miejscawrzedzie,
+        s1_0.numer,
+        s1_0.opis,
+        s1_0.rzedy
+    from
+        sala s1_0
+2026-01-23T23:07:38.343+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    select
+        f1_0.id,
+        f1_0.czas_trwania,
+        f1_0.gatunek,
+        f1_0.obraz_url,
+        f1_0.obsada,
+        f1_0.rezyser,
+        f1_0.trailer_youtube_id,
+        f1_0.tytul,
+        f1_0.wiek
+    from
+        film f1_0
+Hibernate:
+    select
+        f1_0.id,
+        f1_0.czas_trwania,
+        f1_0.gatunek,
+        f1_0.obraz_url,
+        f1_0.obsada,
+        f1_0.rezyser,
+        f1_0.trailer_youtube_id,
+        f1_0.tytul,
+        f1_0.wiek
+    from
+        film f1_0
+2026-01-23T23:07:38.347+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.349+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.349+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.350+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.350+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.351+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.351+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.352+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.352+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.352+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.353+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.353+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.354+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.354+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.355+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.355+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.355+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.356+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.356+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.357+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.357+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.358+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.359+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.359+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.360+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.360+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.361+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.362+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.362+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.362+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.363+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.363+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.364+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.365+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.365+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.366+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.366+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.367+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.367+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.368+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.368+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.369+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.369+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.370+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.370+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.370+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.371+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.371+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.372+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.372+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.373+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.373+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.374+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.374+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.375+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.375+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.376+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.376+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.376+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.377+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.377+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.378+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2026-01-23T23:07:38.379+01:00 DEBUG 10936 --- [           main] org.hibernate.SQL                        :
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate:
+    insert
+    into
+        seans
+        (cena_normalny, cena_rodzinny, cena_ulgowy, data_godzina, film_id, sala_id, id)
+    values
+        (?, ?, ?, ?, ?, ?, default)
+>>> Stworzono repertuar seans�w na 7 dni
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\szyme\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-01-23T23:07:39.067+01:00  INFO 10936 --- [           main] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 367 ms
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.437 s -- in pl.gdansk.cinema.cinema_booking.OpenApiCheckTest
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  9.028 s
+[INFO] Finished at: 2026-01-23T23:07:39+01:00
+[INFO] ------------------------------------------------------------------------
