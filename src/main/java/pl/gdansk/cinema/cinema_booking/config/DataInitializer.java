@@ -4,18 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import pl.gdansk.cinema.cinema_booking.entity.Film;
-import pl.gdansk.cinema.cinema_booking.entity.Sala;
-import pl.gdansk.cinema.cinema_booking.entity.Seans;
-import pl.gdansk.cinema.cinema_booking.entity.Uzytkownik;
-import pl.gdansk.cinema.cinema_booking.repository.FilmRepository;
-import pl.gdansk.cinema.cinema_booking.repository.SalaRepository;
-import pl.gdansk.cinema.cinema_booking.repository.SeansRepository;
-import pl.gdansk.cinema.cinema_booking.repository.UzytkownikRepository;
+import pl.gdansk.cinema.cinema_booking.entity.*;
+import pl.gdansk.cinema.cinema_booking.repository.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -26,6 +23,9 @@ public class DataInitializer implements CommandLineRunner {
     private final FilmRepository filmRepository;
     private final SalaRepository salaRepository;
     private final SeansRepository seansRepository;
+    private final RezerwacjaRepository rezerwacjaRepository;
+    private final BiletRepository biletRepository;
+    private final MiejsceRepository miejsceRepository;
 
     @Override
     public void run(String... args) {
@@ -195,12 +195,16 @@ public class DataInitializer implements CommandLineRunner {
             filmRepository.saveAll(List.of(film1, film2, film3, film4, film5, film6, film7));
             System.out.println(">>> Stworzono pełny repertuar filmów (7 pozycji)");
 
-            // Dodanie seansów
+            // Dodanie seansów i mock data sprzedaży
             List<Sala> sale = salaRepository.findAll();
             List<Film> filmy = filmRepository.findAll();
+            List<Uzytkownik> uzytkownicy = uzytkownikRepository.findAll();
+            Random random = new Random();
+
             if (sale.size() >= 3 && filmy.size() >= 7) {
-                java.util.List<Seans> seanseToSave = new java.util.ArrayList<>();
-                for (int i = 0; i < 7; i++) {
+                List<Seans> seanseToSave = new ArrayList<>();
+                // Generujemy seanse od 14 dni wstecz do 7 dni w przód
+                for (int i = -14; i <= 7; i++) {
                     LocalDateTime day = LocalDateTime.now().plusDays(i).withHour(10).withMinute(0).withSecond(0).withNano(0);
 
                     // Sala 1
@@ -219,7 +223,68 @@ public class DataInitializer implements CommandLineRunner {
                     seanseToSave.add(Seans.builder().film(filmy.get(3)).sala(sale.get(2)).dataGodzina(day.plusHours(6)).cenaNormalny(23.0).cenaUlgowy(11.5).cenaRodzinny(16.0).build());
                 }
                 seansRepository.saveAll(seanseToSave);
-                System.out.println(">>> Stworzono repertuar seansów na 7 dni");
+                System.out.println(">>> Stworzono repertuar seansów (21 dni x 9 seansów)");
+
+                // Generowanie mock sprzedaży dla seansów z przeszłości i dzisiaj
+                List<Seans> savedSeanse = seansRepository.findAll();
+                LocalDateTime now = LocalDateTime.now();
+
+                for (Seans seans : savedSeanse) {
+                    // Tylko dla seansów które już się odbyły lub są blisko (żeby statystyki miały dane z przeszłości)
+                    if (seans.getDataGodzina().isBefore(now.plusDays(1))) {
+                        int numReservations = random.nextInt(5) + 2; // 2-6 rezerwacji na seans
+                        for (int r = 0; r < numReservations; r++) {
+                            Uzytkownik user = uzytkownicy.get(random.nextInt(uzytkownicy.size()));
+                            
+                            // Data rezerwacji musi być przed seansem
+                            LocalDateTime bookingTime = seans.getDataGodzina().minusDays(random.nextInt(3)).minusHours(random.nextInt(10));
+                            if (bookingTime.isAfter(now)) bookingTime = now.minusMinutes(5);
+
+                            Rezerwacja rezerwacja = Rezerwacja.builder()
+                                    .uzytkownik(user)
+                                    .seans(seans)
+                                    .numerRezerwacji("MOCK-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase())
+                                    .dataRezerwacji(bookingTime)
+                                    .status(StatusRezerwacji.OPLACONA)
+                                    .build();
+                            rezerwacjaRepository.save(rezerwacja);
+
+                            int numTickets = random.nextInt(3) + 1; // 1-3 bilety
+                            for (int t = 0; t < numTickets; t++) {
+                                int rzad = random.nextInt(seans.getSala().getRzedy()) + 1;
+                                int numer = random.nextInt(seans.getSala().getMiejscaWRzedzie()) + 1;
+
+                                // Dla mock data przy niskim obłożeniu kolizje będą rzadkie
+                                
+                                TypBiletu typ = TypBiletu.values()[random.nextInt(TypBiletu.values().length)];
+                                Double cena = switch (typ) {
+                                    case NORMALNY -> seans.getCenaNormalny();
+                                    case ULGOWY -> seans.getCenaUlgowy();
+                                    case RODZINNY -> seans.getCenaRodzinny();
+                                };
+
+                                Bilet bilet = Bilet.builder()
+                                        .seans(seans)
+                                        .rezerwacja(rezerwacja)
+                                        .rzad(rzad)
+                                        .miejsce(numer)
+                                        .typBiletu(typ)
+                                        .cena(cena)
+                                        .build();
+                                biletRepository.save(bilet);
+
+                                Miejsce miejsce = Miejsce.builder()
+                                        .seans(seans)
+                                        .rzad(rzad)
+                                        .numer(numer)
+                                        .status(Miejsce.StatusMiejsca.ZAJETE)
+                                        .build();
+                                miejsceRepository.save(miejsce);
+                            }
+                        }
+                    }
+                }
+                System.out.println(">>> Wygenerowano mock dane sprzedaży (rezerwacje, bilety, zajęte miejsca)");
             }
         }
     }

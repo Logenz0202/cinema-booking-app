@@ -37,11 +37,15 @@ class StatisticsServiceTest {
     @Autowired
     private RezerwacjaRepository rezerwacjaRepository;
 
+    @Autowired
+    private SalaRepository salaRepository;
+
     @Test
     void shouldReturnOccupancyReport() {
         // Given
+        Sala sala = salaRepository.save(Sala.builder().numer(1).rzedy(5).miejscaWRzedzie(10).build());
         Film film = filmRepository.save(Film.builder().tytul("Interstellar").build());
-        Seans seans = seansRepository.save(Seans.builder().film(film).dataGodzina(LocalDateTime.now()).build());
+        Seans seans = seansRepository.save(Seans.builder().film(film).sala(sala).dataGodzina(LocalDateTime.now()).build());
         
         miejsceRepository.save(Miejsce.builder().seans(seans).status(Miejsce.StatusMiejsca.ZAJETE).rzad(1).numer(1).build());
         miejsceRepository.save(Miejsce.builder().seans(seans).status(Miejsce.StatusMiejsca.WOLNE).rzad(1).numer(2).build());
@@ -52,12 +56,12 @@ class StatisticsServiceTest {
         // Then
         assertThat(report).isNotEmpty();
         SeansOccupancyReportDto row = report.stream()
-                .filter(r -> r.getTytul().equals("Interstellar"))
+                .filter(r -> r.getSeansId().equals(seans.getId()))
                 .findFirst()
                 .orElseThrow();
         
         assertThat(row.getZajeteMiejsca()).isEqualTo(1L);
-        assertThat(row.getWszystkieMiejsca()).isEqualTo(2L);
+        assertThat(row.getWszystkieMiejsca()).isEqualTo(50L); // 5 * 10
     }
 
     @Test

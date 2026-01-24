@@ -23,11 +23,12 @@ public class StatisticsService {
     public List<SeansOccupancyReportDto> getSeansOccupancyReport() {
         String sql = "SELECT s.id, f.tytul, s.data_godzina, " +
                      "COUNT(CASE WHEN m.status = 'ZAJETE' THEN 1 END) as zajete_miejsca, " +
-                     "COUNT(m.id) as wszystkie_miejsca " +
+                     "(sl.rzedy * sl.miejscawrzedzie) as wszystkie_miejsca " +
                      "FROM seans s " +
                      "JOIN film f ON s.film_id = f.id " +
+                     "JOIN sala sl ON s.sala_id = sl.id " +
                      "LEFT JOIN miejsce m ON s.id = m.seans_id " +
-                     "GROUP BY s.id, f.tytul, s.data_godzina";
+                     "GROUP BY s.id, f.tytul, s.data_godzina, sl.rzedy, sl.miejscawrzedzie";
         
         return jdbcTemplate.query(sql, new SeansOccupancyReportRowMapper());
     }
