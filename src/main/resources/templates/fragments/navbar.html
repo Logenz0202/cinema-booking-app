@@ -13,8 +13,17 @@
                 <li class="nav-item"><a class="nav-link" href="/filmy-lista">Filmy</a></li>
             </ul>
             <div class="navbar-nav ms-auto">
-                <a sec:authorize="hasRole('ADMIN')" class="nav-link" href="/admin/filmy">Admin Panel</a>
-                <a sec:authorize="hasRole('ADMIN')" class="nav-link" href="/swagger-ui.html">API Docs</a>
+                <div sec:authorize="hasRole('ADMIN')" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown">
+                        Panel Admina
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/admin/filmy">Zarządzaj filmami</a></li>
+                        <li><a class="dropdown-item" href="/admin/seanse">Zarządzaj seansami</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/swagger-ui.html">API Docs</a></li>
+                    </ul>
+                </div>
                 
                 <div sec:authorize="isAuthenticated()" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">

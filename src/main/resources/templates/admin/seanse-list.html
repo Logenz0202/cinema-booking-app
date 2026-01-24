@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Panel admina - Seanse</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Zarządzanie seansami</h1>
+        <a class="btn btn-primary" href="/admin/seanse/nowy">Dodaj seans</a>
+    </div>
+
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-striped align-middle mb-0">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Film</th>
+                <th>Sala</th>
+                <th>Data i godzina</th>
+                <th>Ceny (N/U/R)</th>
+                <th class="text-end">Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${seanse.isEmpty()}">
+                <td colspan="6" class="text-center text-muted py-4">Brak seansów</td>
+            </tr>
+            <tr th:each="seans : ${seanse}">
+                <td th:text="${seans.id}">1</td>
+                <td th:text="${seans.filmTytul}">Tytuł filmu</td>
+                <td th:text="'Sala ' + ${seans.salaNumer}">Sala 1</td>
+                <td th:text="${#temporals.format(seans.dataGodzina, 'yyyy-MM-dd HH:mm')}">2026-01-01 12:00</td>
+                <td th:text="${seans.cenaNormalny} + ' / ' + ${seans.cenaUlgowy} + ' / ' + ${seans.cenaRodzinny}">25 / 20 / 60</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary" th:href="@{'/admin/seanse/' + ${seans.id} + '/edytuj'}">Edytuj</a>
+                    <form th:action="@{'/admin/seanse/' + ${seans.id} + '/usun'}" method="post" class="d-inline">
+                        <button class="btn btn-sm btn-outline-danger" type="submit" onclick="return confirm('Czy na pewno chcesz usunąć ten seans?')">Usuń</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

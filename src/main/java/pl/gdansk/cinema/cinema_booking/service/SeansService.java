@@ -87,6 +87,7 @@ public class SeansService {
         Seans existingSeans = seansRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Nie znaleziono seansu o ID: " + id));
         
+        seansDto.setId(id);
         validateSeans(seansDto);
 
         Film film = filmRepository.findById(seansDto.getFilmId())
@@ -99,6 +100,7 @@ public class SeansService {
         existingSeans.setDataGodzina(seansDto.getDataGodzina());
         existingSeans.setCenaNormalny(seansDto.getCenaNormalny());
         existingSeans.setCenaUlgowy(seansDto.getCenaUlgowy());
+        existingSeans.setCenaRodzinny(seansDto.getCenaRodzinny());
 
         return seansMapper.toDto(seansRepository.save(existingSeans));
     }

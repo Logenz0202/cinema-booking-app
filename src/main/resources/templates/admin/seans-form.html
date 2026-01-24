@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Panel admina - Seans</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0" th:text="${seansForm.id} == null ? 'Dodaj seans' : 'Edytuj seans'">Seans</h1>
+        <a class="btn btn-outline-secondary" href="/admin/seanse">Wróć do listy</a>
+    </div>
+
+    <form th:action="${seansForm.id} == null ? @{/admin/seanse} : @{/admin/seanse/{id}(id=${seansForm.id})}"
+          th:object="${seansForm}" method="post" class="card shadow-sm p-4">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Film</label>
+                <select class="form-select" th:field="*{filmId}">
+                    <option value="">Wybierz film...</option>
+                    <option th:each="film : ${filmy}" th:value="${film.id}" th:text="${film.tytul}">Film</option>
+                </select>
+                <div class="text-danger small" th:errors="*{filmId}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Sala</label>
+                <select class="form-select" th:field="*{salaId}">
+                    <option value="">Wybierz salę...</option>
+                    <option th:each="sala : ${sale}" th:value="${sala.id}" th:text="'Sala ' + ${sala.numer}">Sala</option>
+                </select>
+                <div class="text-danger small" th:errors="*{salaId}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Data i godzina</label>
+                <input type="datetime-local" class="form-control" th:field="*{dataGodzina}">
+                <div class="text-danger small" th:errors="*{dataGodzina}"></div>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Cena normalny</label>
+                <input type="number" step="0.01" class="form-control" th:field="*{cenaNormalny}">
+                <div class="text-danger small" th:errors="*{cenaNormalny}"></div>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Cena ulgowy</label>
+                <input type="number" step="0.01" class="form-control" th:field="*{cenaUlgowy}">
+                <div class="text-danger small" th:errors="*{cenaUlgowy}"></div>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Cena rodzinny</label>
+                <input type="number" step="0.01" class="form-control" th:field="*{cenaRodzinny}">
+                <div class="text-danger small" th:errors="*{cenaRodzinny}"></div>
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+            <button type="submit" class="btn btn-primary">Zapisz</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
