@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
+import pl.gdansk.cinema.cinema_booking.dto.SalesStatisticsDto;
 import pl.gdansk.cinema.cinema_booking.dto.SeansOccupancyReportDto;
 import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -28,6 +30,22 @@ public class StatisticsService {
                      "GROUP BY s.id, f.tytul, s.data_godzina";
         
         return jdbcTemplate.query(sql, new SeansOccupancyReportRowMapper());
+    }
+
+    public List<SalesStatisticsDto> getSalesStatistics() {
+        String sql = "SELECT CAST(r.data_rezerwacji AS DATE) as dzien, " +
+                     "COUNT(b.id) as liczba_biletow, " +
+                     "SUM(b.cena) as przychod " +
+                     "FROM bilet b " +
+                     "JOIN rezerwacja r ON b.rezerwacja_id = r.id " +
+                     "GROUP BY CAST(r.data_rezerwacji AS DATE) " +
+                     "ORDER BY dzien DESC";
+        
+        return jdbcTemplate.query(sql, (rs, rowNum) -> SalesStatisticsDto.builder()
+                .date(rs.getDate("dzien").toLocalDate())
+                .ticketCount(rs.getLong("liczba_biletow"))
+                .revenue(rs.getDouble("przychod"))
+                .build());
     }
 
     private static class SeansOccupancyReportRowMapper implements RowMapper<SeansOccupancyReportDto> {

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Panel admina - Statystyki</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<div class="container mt-4">
+    <h1 class="h3 mb-4">Statystyki i Raporty</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Przychód w czasie</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="salesChart" style="max-height: 400px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Sprzedaż biletów wg dni</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Data</th>
+                            <th>Liczba biletów</th>
+                            <th>Przychód</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="stat : ${salesStats}">
+                            <td th:text="${#temporals.format(stat.date, 'dd.MM.yyyy')}">01.01.2024</td>
+                            <td th:text="${stat.ticketCount}">10</td>
+                            <td th:text="${#numbers.formatDecimal(stat.revenue, 1, 2, 'COMMA')} + ' zł'">100,00 zł</td>
+                        </tr>
+                        <tr th:if="${salesStats.isEmpty()}">
+                            <td colspan="3" class="text-center text-muted">Brak danych o sprzedaży</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Obłożenie seansów</h5>
+                    <a href="/api/v1/raporty/oblozenie/csv" class="btn btn-sm btn-light">Eksport CSV</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Seans</th>
+                            <th>Zajęte</th>
+                            <th>%</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="occ : ${occupancyStats}">
+                            <td>
+                                <div class="fw-bold" th:text="${occ.tytul}">Tytuł</div>
+                                <div class="small text-muted" th:text="${#temporals.format(occ.dataGodzina, 'dd.MM HH:mm')}">Data</div>
+                            </td>
+                            <td th:text="${occ.zajeteMiejsca} + ' / ' + ${occ.wszystkieMiejsca}">5 / 50</td>
+                            <td>
+                                <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar" role="progressbar" 
+                                         th:style="'width: ' + (${occ.wszystkieMiejsca > 0} ? ${occ.zajeteMiejsca * 100.0 / occ.wszystkieMiejsca} : 0) + '%'"
+                                         th:aria-valuenow="${occ.zajeteMiejsca}" aria-valuemin="0" 
+                                         th:aria-valuemax="${occ.wszystkieMiejsca}"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:if="${occupancyStats.isEmpty()}">
+                            <td colspan="3" class="text-center text-muted">Brak danych o seansach</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    const salesData = /*[[${salesStats}]]*/ [];
+    
+    // Sortuj dane do wykresu chronologicznie (salesStats są malejąco w serwisie)
+    const chartData = [...salesData].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: chartData.map(d => new Date(d.date).toLocaleDateString()),
+            datasets: [{
+                label: 'Przychód (zł)',
+                data: chartData.map(d => d.revenue),
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+                tension: 0.1
+            }, {
+                label: 'Liczba biletów',
+                data: chartData.map(d => d.ticketCount),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                yAxisID: 'y1',
+                type: 'bar'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'Przychód'
+                    }
+                },
+                y1: {
+                    beginAtZero: true,
+                    position: 'right',
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Liczba biletów'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
