@@ -39,7 +39,10 @@
                     </ul>
                 </div>
                 
-                <a sec:authorize="!isAuthenticated()" class="btn btn-outline-light btn-sm ms-2" href="/login">Zaloguj</a>
+                <div sec:authorize="!isAuthenticated()" class="d-flex align-items-center">
+                    <a class="btn btn-outline-light btn-sm ms-2" href="/rejestracja">Zarejestruj</a>
+                    <a class="btn btn-outline-light btn-sm ms-2" href="/login">Zaloguj</a>
+                </div>
             </div>
         </div>
     </div>

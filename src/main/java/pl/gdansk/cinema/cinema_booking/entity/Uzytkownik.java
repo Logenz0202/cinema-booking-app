@@ -19,6 +19,9 @@ public class Uzytkownik {
     private String username;
     private String haslo;
 
+    // Aby dodać więcej pól (np. email):
+    // private String email;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "uzytkownik_role", joinColumns = @JoinColumn(name = "uzytkownik_id"))
     @Column(name = "rola")
