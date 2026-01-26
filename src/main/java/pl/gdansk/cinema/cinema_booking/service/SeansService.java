@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@lombok.extern.slf4j.Slf4j
 public class SeansService {
     private final SeansRepository seansRepository;
     private final FilmRepository filmRepository;
@@ -33,6 +34,7 @@ public class SeansService {
 
     @Transactional(readOnly = true)
     public List<SeansDto> getAllSeanse() {
+        log.debug("Pobieranie wszystkich seansów");
         return seansRepository.findAll().stream()
                 .map(seansMapper::toDto)
                 .collect(Collectors.toList());
@@ -40,19 +42,25 @@ public class SeansService {
 
     @Transactional(readOnly = true)
     public Page<SeansDto> getSeansePaged(Pageable pageable) {
+        log.debug("Pobieranie stronicowanych seansów: {}", pageable);
         return seansRepository.findAll(pageable)
                 .map(seansMapper::toDto);
     }
 
     @Transactional(readOnly = true)
     public SeansDto getSeansById(Long id) {
+        log.debug("Pobieranie seansu o ID: {}", id);
         return seansRepository.findById(id)
                 .map(seansMapper::toDto)
-                .orElseThrow(() -> new ResourceNotFoundException("Nie znaleziono seansu o ID: " + id));
+                .orElseThrow(() -> {
+                    log.error("Nie znaleziono seansu o ID: {}", id);
+                    return new ResourceNotFoundException("Nie znaleziono seansu o ID: " + id);
+                });
     }
 
     @Transactional(readOnly = true)
     public List<SeansDto> getSeanseByFilmId(Long filmId) {
+        log.debug("Pobieranie nadchodzących seansów dla filmu o ID: {}", filmId);
         return seansRepository.findByFilmIdAndDataGodzinaAfterOrderByDataGodzinaAsc(filmId, LocalDateTime.now().toLocalDate().atStartOfDay()).stream()
                 .map(seansMapper::toDto)
                 .collect(Collectors.toList());
@@ -60,6 +68,7 @@ public class SeansService {
 
     @Transactional(readOnly = true)
     public List<SeansDto> getSeanseByFilmIdAndDate(Long filmId, LocalDateTime startOfDay) {
+        log.debug("Pobieranie seansów dla filmu {} w dniu {}", filmId, startOfDay.toLocalDate());
         LocalDateTime endOfDay = startOfDay.withHour(23).withMinute(59).withSecond(59);
         return seansRepository.findByFilmIdAndDataGodzinaBetween(filmId, startOfDay, endOfDay).stream()
                 .map(seansMapper::toDto)
@@ -68,6 +77,7 @@ public class SeansService {
 
     @Transactional(readOnly = true)
     public List<SeansDto> getSeanseByDate(LocalDateTime startOfDay) {
+        log.debug("Pobieranie wszystkich seansów w dniu {}", startOfDay.toLocalDate());
         LocalDateTime endOfDay = startOfDay.withHour(23).withMinute(59).withSecond(59);
         return seansRepository.findByDataGodzinaBetween(startOfDay, endOfDay).stream()
                 .map(seansMapper::toDto)
@@ -76,6 +86,8 @@ public class SeansService {
 
     @Transactional
     public SeansDto createSeans(SeansDto seansDto) {
+        log.info("Tworzenie nowego seansu dla filmu ID: {}, sala ID: {}, data: {}", 
+                seansDto.getFilmId(), seansDto.getSalaId(), seansDto.getDataGodzina());
         validateSeans(seansDto);
         
         Film film = filmRepository.findById(seansDto.getFilmId())
@@ -87,11 +99,14 @@ public class SeansService {
         seans.setFilm(film);
         seans.setSala(sala);
 
-        return seansMapper.toDto(seansRepository.save(seans));
+        Seans saved = seansRepository.save(seans);
+        log.info("Seans utworzony pomyślnie z ID: {}", saved.getId());
+        return seansMapper.toDto(saved);
     }
 
     @Transactional
     public SeansDto updateSeans(Long id, SeansDto seansDto) {
+        log.info("Aktualizacja seansu o ID: {}", id);
         Seans existingSeans = seansRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Nie znaleziono seansu o ID: " + id));
         
@@ -110,12 +125,16 @@ public class SeansService {
         existingSeans.setCenaUlgowy(seansDto.getCenaUlgowy());
         existingSeans.setCenaRodzinny(seansDto.getCenaRodzinny());
 
-        return seansMapper.toDto(seansRepository.save(existingSeans));
+        Seans updated = seansRepository.save(existingSeans);
+        log.info("Seans o ID: {} został zaktualizowany", id);
+        return seansMapper.toDto(updated);
     }
 
     @Transactional
     public void deleteSeans(Long id) {
+        log.info("Usuwanie seansu o ID: {}", id);
         if (!seansRepository.existsById(id)) {
+            log.warn("Próba usunięcia nieistniejącego seansu o ID: {}", id);
             throw new ResourceNotFoundException("Nie znaleziono seansu o ID: " + id);
         }
         // Najpierw bilety i rezerwacje
@@ -123,9 +142,11 @@ public class SeansService {
         rezerwacjaRepository.deleteAll(rezerwacjaRepository.findBySeansId(id));
         
         seansRepository.deleteById(id);
+        log.info("Seans o ID: {} został usunięty wraz z powiązanymi biletami i rezerwacjami", id);
     }
 
     private void validateSeans(SeansDto seansDto) {
+        log.debug("Walidacja nakładania się seansów dla sali ID: {} i godziny: {}", seansDto.getSalaId(), seansDto.getDataGodzina());
         Film film = filmRepository.findById(seansDto.getFilmId())
                 .orElseThrow(() -> new ResourceNotFoundException("Nie znaleziono filmu o ID: " + seansDto.getFilmId()));
         
@@ -148,8 +169,10 @@ public class SeansService {
             LocalDateTime sEnd = sStart.plusMinutes(s.getFilm().getCzasTrwania() + CLEANING_TIME_MINUTES);
 
             if (start.isBefore(sEnd) && end.isAfter(sStart)) {
-                throw new IllegalStateException("Seans nakłada się na inny seans w tej sali (" 
-                        + s.getFilm().getTytul() + " " + sStart.toLocalTime() + "-" + sEnd.toLocalTime() + ")");
+                String errorMsg = "Seans nakłada się na inny seans w tej sali (" 
+                        + s.getFilm().getTytul() + " " + sStart.toLocalTime() + "-" + sEnd.toLocalTime() + ")";
+                log.warn("Walidacja nieudana: {}", errorMsg);
+                throw new IllegalStateException(errorMsg);
             }
         }
     }

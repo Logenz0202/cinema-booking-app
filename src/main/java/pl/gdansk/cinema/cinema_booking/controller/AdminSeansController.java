@@ -19,6 +19,7 @@ import pl.gdansk.cinema.cinema_booking.service.SeansService;
 @Controller
 @RequestMapping("/admin/seanse")
 @RequiredArgsConstructor
+@lombok.extern.slf4j.Slf4j
 public class AdminSeansController {
 
     private final SeansService seansService;
@@ -28,6 +29,7 @@ public class AdminSeansController {
     @GetMapping
     public String list(@PageableDefault(size = 12, sort = "dataGodzina", direction = Sort.Direction.ASC) Pageable pageable,
                        Model model) {
+        log.debug("Wyświetlanie listy seansów w panelu admina: {}", pageable);
         Page<SeansDto> seansePage = seansService.getSeansePaged(pageable);
         model.addAttribute("seansePage", seansePage);
         model.addAttribute("seanse", seansePage.getContent());
@@ -36,6 +38,7 @@ public class AdminSeansController {
 
     @GetMapping("/nowy")
     public String createForm(Model model) {
+        log.debug("Wyświetlanie formularza nowego seansu");
         model.addAttribute("seansForm", new SeansForm());
         model.addAttribute("filmy", filmService.getAllFilmy());
         model.addAttribute("sale", salaService.getAllSale());
@@ -45,14 +48,18 @@ public class AdminSeansController {
     @PostMapping
     public String create(@Valid @ModelAttribute("seansForm") SeansForm seansForm,
                          BindingResult bindingResult, Model model) {
+        log.info("Próba utworzenia nowego seansu dla filmu ID: {}", seansForm.getFilmId());
         if (bindingResult.hasErrors()) {
+            log.warn("Błąd walidacji podczas tworzenia seansu: {}", bindingResult.getAllErrors());
             model.addAttribute("filmy", filmService.getAllFilmy());
             model.addAttribute("sale", salaService.getAllSale());
             return "admin/seans-form";
         }
         try {
-            seansService.createSeans(seansForm.toDto());
+            SeansDto created = seansService.createSeans(seansForm.toDto());
+            log.info("Seans utworzony pomyślnie z ID: {}", created.getId());
         } catch (IllegalStateException e) {
+            log.warn("Błąd biznesowy podczas tworzenia seansu: {}", e.getMessage());
             bindingResult.rejectValue("dataGodzina", "overlap", e.getMessage());
             model.addAttribute("filmy", filmService.getAllFilmy());
             model.addAttribute("sale", salaService.getAllSale());
@@ -63,6 +70,7 @@ public class AdminSeansController {
 
     @GetMapping("/{id}/edytuj")
     public String editForm(@PathVariable Long id, Model model) {
+        log.debug("Wyświetlanie formularza edycji seansu o ID: {}", id);
         model.addAttribute("seansForm", SeansForm.fromDto(seansService.getSeansById(id)));
         model.addAttribute("filmy", filmService.getAllFilmy());
         model.addAttribute("sale", salaService.getAllSale());
@@ -73,14 +81,18 @@ public class AdminSeansController {
     public String update(@PathVariable Long id,
                          @Valid @ModelAttribute("seansForm") SeansForm seansForm,
                          BindingResult bindingResult, Model model) {
+        log.info("Próba aktualizacji seansu o ID: {}", id);
         if (bindingResult.hasErrors()) {
+            log.warn("Błąd walidacji podczas aktualizacji seansu {}: {}", id, bindingResult.getAllErrors());
             model.addAttribute("filmy", filmService.getAllFilmy());
             model.addAttribute("sale", salaService.getAllSale());
             return "admin/seans-form";
         }
         try {
             seansService.updateSeans(id, seansForm.toDto());
+            log.info("Seans o ID: {} zaktualizowany pomyślnie", id);
         } catch (IllegalStateException e) {
+            log.warn("Błąd biznesowy podczas aktualizacji seansu {}: {}", id, e.getMessage());
             bindingResult.rejectValue("dataGodzina", "overlap", e.getMessage());
             model.addAttribute("filmy", filmService.getAllFilmy());
             model.addAttribute("sale", salaService.getAllSale());
@@ -91,7 +103,9 @@ public class AdminSeansController {
 
     @PostMapping("/{id}/usun")
     public String delete(@PathVariable Long id) {
+        log.info("Próba usunięcia seansu o ID: {}", id);
         seansService.deleteSeans(id);
+        log.info("Seans o ID: {} został usunięty pomyślnie", id);
         return "redirect:/admin/seanse";
     }
 }

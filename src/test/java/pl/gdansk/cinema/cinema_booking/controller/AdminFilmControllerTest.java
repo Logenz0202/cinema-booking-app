@@ -78,6 +78,8 @@ class AdminFilmControllerTest {
     @Test
     @WithMockUser(roles = "ADMIN")
     void shouldCreateFilm() throws Exception {
+        when(filmService.createFilm(any())).thenReturn(FilmDto.builder().id(1L).build());
+
         mockMvc.perform(post("/admin/filmy")
                         .param("tytul", "New Film")
                         .param("gatunek", "Action")

@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
+@lombok.extern.slf4j.Slf4j
 public class WebController {
 
     private final FilmService filmService;
@@ -35,6 +36,7 @@ public class WebController {
 
     @GetMapping("/")
     public String index(@RequestParam(required = false) String date, Model model) {
+        log.debug("Wywołanie strony głównej dla daty: {}", date);
         LocalDate selectedDate;
         if (date == null) {
             selectedDate = LocalDate.now();
@@ -79,6 +81,7 @@ public class WebController {
 
     @GetMapping("/filmy-lista")
     public String filmList(@PageableDefault(size = 12, sort = "tytul") Pageable pageable, Model model) {
+        log.debug("Pobieranie publicznej listy filmów: {}", pageable);
         Page<FilmDto> filmyPage = filmService.getAllFilmy(pageable);
         model.addAttribute("filmyPage", filmyPage);
         model.addAttribute("filmy", filmyPage.getContent());
@@ -87,6 +90,7 @@ public class WebController {
 
     @GetMapping("/film/{id}")
     public String filmDetails(@PathVariable Long id, Model model) {
+        log.debug("Wyświetlanie szczegółów filmu o ID: {}", id);
         FilmDto film = filmService.getFilmById(id);
         List<SeansDto> allUpcoming = seansService.getSeanseByFilmId(id);
 
@@ -120,6 +124,7 @@ public class WebController {
 
     @GetMapping("/rezerwacja/{seansId}")
     public String reservation(@PathVariable Long seansId, Model model) {
+        log.debug("Rozpoczęcie wyboru miejsca dla seansu ID: {}", seansId);
         SeansDto seans = seansService.getSeansById(seansId);
         List<String> occupiedSeats = rezerwacjaService.getOccupiedSeats(seansId);
         
@@ -132,13 +137,16 @@ public class WebController {
     @org.springframework.web.bind.annotation.ResponseBody
     public String addToCart(@RequestParam Long seansId, 
                              @RequestBody List<pl.gdansk.cinema.cinema_booking.dto.BiletDto> bilety) {
+        log.info("Dodawanie {} biletów do koszyka dla seansu ID: {}", bilety.size(), seansId);
         cartService.addToCart(seansId, bilety);
         return "/podsumowanie";
     }
 
     @GetMapping("/podsumowanie")
     public String summary(Model model) {
+        log.debug("Wyświetlanie podsumowania koszyka");
         if (cartService.getSeansId() == null) {
+            log.warn("Próba wejścia do podsumowania z pustym koszykiem");
             return "redirect:/";
         }
         model.addAttribute("items", cartService.getItems());
@@ -150,9 +158,11 @@ public class WebController {
     @PostMapping("/rezerwacja/finalizuj")
     public String finalizeReservation(java.security.Principal principal, Model model) {
         if (cartService.getSeansId() == null || principal == null) {
+            log.warn("Błąd finalizacji: brak seansu w koszyku lub brak zalogowanego użytkownika");
             return "redirect:/";
         }
 
+        log.info("Użytkownik {} finalizuje rezerwację dla seansu {}", principal.getName(), cartService.getSeansId());
         try {
             String ticketId = rezerwacjaService.finalizujRezerwacje(
                     cartService.getSeansId(),
@@ -160,10 +170,12 @@ public class WebController {
                     principal.getName()
             );
 
+            log.info("Rezerwacja sfinalizowana pomyślnie. Numer: {}", ticketId);
             model.addAttribute("ticketId", ticketId);
             cartService.clearCart();
             return "potwierdzenie";
         } catch (Exception e) {
+            log.error("Błąd podczas finalizacji rezerwacji przez {}: {}", principal.getName(), e.getMessage());
             model.addAttribute("error", e.getMessage());
             model.addAttribute("items", cartService.getItems());
             model.addAttribute("total", cartService.getTotalPrice());

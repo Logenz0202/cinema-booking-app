@@ -11,13 +11,16 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@lombok.extern.slf4j.Slf4j
 public class UzytkownikService {
 
     private final UzytkownikRepository uzytkownikRepository;
     private final PasswordEncoder passwordEncoder;
 
     public void zarejestruj(RejestracjaDto dto) {
+        log.info("Próba rejestracji nowego użytkownika: {}", dto.getUsername());
         if (uzytkownikRepository.findByUsername(dto.getUsername()).isPresent()) {
+            log.warn("Rejestracja nieudana: użytkownik {} już istnieje", dto.getUsername());
             throw new RuntimeException("Użytkownik o podanej nazwie już istnieje");
         }
 
@@ -30,5 +33,6 @@ public class UzytkownikService {
                 .build();
 
         uzytkownikRepository.save(uzytkownik);
+        log.info("Użytkownik {} został pomyślnie zarejestrowany", dto.getUsername());
     }
 }

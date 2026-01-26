@@ -93,6 +93,8 @@ class AdminSeansControllerTest {
     @Test
     @WithMockUser(roles = "ADMIN")
     void shouldCreateSeans() throws Exception {
+        when(seansService.createSeans(any())).thenReturn(SeansDto.builder().id(1L).build());
+
         String dataStr = LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.MINUTES).toString();
         mockMvc.perform(post("/admin/seanse")
                         .param("filmId", "1")

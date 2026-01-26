@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@lombok.extern.slf4j.Slf4j
 public class RezerwacjaService {
     private final BiletRepository biletRepository;
     private final pl.gdansk.cinema.cinema_booking.repository.RezerwacjaRepository rezerwacjaRepository;
@@ -18,6 +19,7 @@ public class RezerwacjaService {
 
     @Transactional(readOnly = true)
     public List<String> getOccupiedSeats(Long seansId) {
+        log.debug("Pobieranie zajętych miejsc dla seansu o ID: {}", seansId);
         return biletRepository.findBySeansId(seansId).stream()
                 .map(bilet -> bilet.getRzad() + "-" + bilet.getMiejsce())
                 .collect(Collectors.toList());
@@ -25,13 +27,21 @@ public class RezerwacjaService {
 
     @Transactional
     public String finalizujRezerwacje(Long seansId, List<pl.gdansk.cinema.cinema_booking.dto.BiletDto> biletDtos, String username) {
+        log.info("Rozpoczęcie finalizacji rezerwacji dla użytkownika: {}, seans ID: {}", username, seansId);
         pl.gdansk.cinema.cinema_booking.entity.Uzytkownik uzytkownik = uzytkownikRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Użytkownik nie znaleziony"));
+                .orElseThrow(() -> {
+                    log.error("Finalizacja nieudana: nie znaleziono użytkownika {}", username);
+                    return new RuntimeException("Użytkownik nie znaleziony");
+                });
         
         pl.gdansk.cinema.cinema_booking.entity.Seans seans = seansRepository.findById(seansId)
-                .orElseThrow(() -> new RuntimeException("Seans nie znaleziony"));
+                .orElseThrow(() -> {
+                    log.error("Finalizacja nieudana: nie znaleziono seansu o ID {}", seansId);
+                    return new RuntimeException("Seans nie znaleziony");
+                });
 
         String numerRezerwacji = "TICK-" + java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+        log.debug("Wygenerowano numer rezerwacji: {}", numerRezerwacji);
 
         pl.gdansk.cinema.cinema_booking.entity.Rezerwacja rezerwacja = pl.gdansk.cinema.cinema_booking.entity.Rezerwacja.builder()
                 .uzytkownik(uzytkownik)
@@ -47,6 +57,7 @@ public class RezerwacjaService {
         for (pl.gdansk.cinema.cinema_booking.dto.BiletDto dto : biletDtos) {
             // Walidacja czy miejsce nie zostało zajęte w międzyczasie
             if (isSeatOccupied(seansId, dto.getRzad(), dto.getMiejsce())) {
+                log.warn("Miejsce zajęte: Rząd {}, Miejsce {} dla seansu {}", dto.getRzad(), dto.getMiejsce(), seansId);
                 throw new IllegalStateException("Miejsce Rząd " + dto.getRzad() + ", Miejsce " + dto.getMiejsce() + " jest już zajęte.");
             }
 
@@ -61,6 +72,7 @@ public class RezerwacjaService {
         }
 
         biletRepository.saveAll(bilety);
+        log.info("Rezerwacja {} zakończona pomyślnie dla {}", numerRezerwacji, username);
         return numerRezerwacji;
     }
 
