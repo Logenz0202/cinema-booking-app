@@ -2,10 +2,15 @@ package pl.gdansk.cinema.cinema_booking.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.gdansk.cinema.cinema_booking.dto.SeansDto;
 import pl.gdansk.cinema.cinema_booking.dto.SeansForm;
 import pl.gdansk.cinema.cinema_booking.service.FilmService;
 import pl.gdansk.cinema.cinema_booking.service.SalaService;
@@ -21,8 +26,11 @@ public class AdminSeansController {
     private final SalaService salaService;
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("seanse", seansService.getAllSeanse());
+    public String list(@PageableDefault(size = 10, sort = "dataGodzina", direction = Sort.Direction.DESC) Pageable pageable,
+                       Model model) {
+        Page<SeansDto> seansePage = seansService.getSeansePaged(pageable);
+        model.addAttribute("seansePage", seansePage);
+        model.addAttribute("seanse", seansePage.getContent());
         return "admin/seanse-list";
     }
 

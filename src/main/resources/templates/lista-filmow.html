@@ -40,6 +40,24 @@
             </div>
         </div>
     </div>
+
+    <!-- Paginacja -->
+    <nav th:if="${filmyPage.totalPages > 1}" class="mt-5">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${filmyPage.first} ? 'disabled'">
+                <a class="page-link" th:href="@{/filmy-lista(page=${filmyPage.number - 1}, size=${filmyPage.size})}">Poprzednia</a>
+            </li>
+
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, filmyPage.totalPages - 1)}"
+                th:classappend="${i == filmyPage.number} ? 'active'">
+                <a class="page-link" th:href="@{/filmy-lista(page=${i}, size=${filmyPage.size})}" th:text="${i + 1}">1</a>
+            </li>
+
+            <li class="page-item" th:classappend="${filmyPage.last} ? 'disabled'">
+                <a class="page-link" th:href="@{/filmy-lista(page=${filmyPage.number + 1}, size=${filmyPage.size})}">Następna</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <footer class="bg-dark text-white py-4 mt-5">

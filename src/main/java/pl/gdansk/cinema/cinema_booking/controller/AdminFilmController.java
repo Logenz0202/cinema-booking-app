@@ -2,10 +2,14 @@ package pl.gdansk.cinema.cinema_booking.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.gdansk.cinema.cinema_booking.dto.FilmDto;
 import pl.gdansk.cinema.cinema_booking.dto.FilmForm;
 import pl.gdansk.cinema.cinema_booking.service.FilmService;
 
@@ -17,8 +21,11 @@ public class AdminFilmController {
     private final FilmService filmService;
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("filmy", filmService.getAllFilmy());
+    public String list(@PageableDefault(size = 10, sort = "tytul") Pageable pageable,
+                       Model model) {
+        Page<FilmDto> filmyPage = filmService.getAllFilmy(pageable);
+        model.addAttribute("filmyPage", filmyPage);
+        model.addAttribute("filmy", filmyPage.getContent());
         return "admin/filmy-list";
     }
 

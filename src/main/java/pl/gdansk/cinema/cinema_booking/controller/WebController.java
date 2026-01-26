@@ -1,6 +1,9 @@
 package pl.gdansk.cinema.cinema_booking.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -75,8 +78,10 @@ public class WebController {
     }
 
     @GetMapping("/filmy-lista")
-    public String filmList(Model model) {
-        model.addAttribute("filmy", filmService.getAllFilmy());
+    public String filmList(@PageableDefault(size = 12, sort = "tytul") Pageable pageable, Model model) {
+        Page<FilmDto> filmyPage = filmService.getAllFilmy(pageable);
+        model.addAttribute("filmyPage", filmyPage);
+        model.addAttribute("filmy", filmyPage.getContent());
         return "lista-filmow";
     }
 
