@@ -21,6 +21,11 @@ public class AuthController {
         return "rejestracja";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @PostMapping("/rejestracja")
     public String zarejestrujUzytkownika(@ModelAttribute("uzytkownik") RejestracjaDto dto, Model model) {
         try {
