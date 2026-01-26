@@ -3,12 +3,18 @@ package pl.gdansk.cinema.cinema_booking.controller;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import pl.gdansk.cinema.cinema_booking.config.SecurityConfig;
 import pl.gdansk.cinema.cinema_booking.dto.FilmDto;
 import pl.gdansk.cinema.cinema_booking.service.FilmService;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -21,23 +27,43 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AdminFilmController.class)
+@Import(SecurityConfig.class)
 class AdminFilmControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private FilmService filmService;
+
+    @MockitoBean
+    private pl.gdansk.cinema.cinema_booking.service.CustomUserDetailsService customUserDetailsService;
+
+    @MockitoBean
+    private pl.gdansk.cinema.cinema_booking.security.ImpersonationFilter impersonationFilter;
+
+    @org.junit.jupiter.api.BeforeEach
+    void setup() throws jakarta.servlet.ServletException, java.io.IOException {
+        org.mockito.Mockito.doAnswer(invocation -> {
+            jakarta.servlet.http.HttpServletRequest request = invocation.getArgument(0);
+            jakarta.servlet.http.HttpServletResponse response = invocation.getArgument(1);
+            jakarta.servlet.FilterChain filterChain = invocation.getArgument(2);
+            filterChain.doFilter(request, response);
+            return null;
+        }).when(impersonationFilter).doFilter(any(), any(), any());
+    }
 
     @Test
     @WithMockUser(roles = "ADMIN")
     void shouldListFilms() throws Exception {
-        when(filmService.getAllFilmy()).thenReturn(List.of());
+        Page<FilmDto> filmPage = new PageImpl<>(Collections.emptyList());
+        when(filmService.getAllFilmy(any(Pageable.class))).thenReturn(filmPage);
 
         mockMvc.perform(get("/admin/filmy"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/filmy-list"))
-                .andExpect(model().attributeExists("filmy"));
+                .andExpect(model().attributeExists("filmy"))
+                .andExpect(model().attributeExists("filmyPage"));
     }
 
     @Test

@@ -22,6 +22,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,6 +34,12 @@ public class SeansServiceTest {
     private FilmRepository filmRepository;
     @Mock
     private SalaRepository salaRepository;
+    @Mock
+    private pl.gdansk.cinema.cinema_booking.repository.BiletRepository biletRepository;
+
+    @Mock
+    private pl.gdansk.cinema.cinema_booking.repository.RezerwacjaRepository rezerwacjaRepository;
+
     @Mock
     private SeansMapper seansMapper;
 
@@ -103,5 +110,30 @@ public class SeansServiceTest {
         when(seansRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(pl.gdansk.cinema.cinema_booking.exception.ResourceNotFoundException.class, () -> seansService.getSeansById(1L));
+    }
+
+    @Test
+    void shouldUpdateSeans() {
+        SeansDto dto = SeansDto.builder().id(1L).filmId(1L).salaId(1L).dataGodzina(LocalDateTime.now().plusDays(1)).build();
+        Seans existing = Seans.builder().id(1L).build();
+        when(seansRepository.findById(1L)).thenReturn(Optional.of(existing));
+        when(filmRepository.findById(1L)).thenReturn(Optional.of(film));
+        when(salaRepository.findById(1L)).thenReturn(Optional.of(sala));
+        when(seansRepository.save(any())).thenReturn(existing);
+        when(seansMapper.toDto(any())).thenReturn(dto);
+
+        SeansDto result = seansService.updateSeans(1L, dto);
+
+        assertThat(result).isNotNull();
+        verify(seansRepository).save(any());
+    }
+
+    @Test
+    void shouldDeleteSeans() {
+        when(seansRepository.existsById(1L)).thenReturn(true);
+
+        seansService.deleteSeans(1L);
+
+        verify(seansRepository).deleteById(1L);
     }
 }

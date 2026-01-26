@@ -3,9 +3,14 @@ package pl.gdansk.cinema.cinema_booking.controller;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import pl.gdansk.cinema.cinema_booking.config.SecurityConfig;
 import pl.gdansk.cinema.cinema_booking.dto.SeansDto;
 import pl.gdansk.cinema.cinema_booking.service.FilmService;
 import pl.gdansk.cinema.cinema_booking.service.SalaService;
@@ -13,6 +18,7 @@ import pl.gdansk.cinema.cinema_booking.service.SeansService;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -25,29 +31,49 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AdminSeansController.class)
+@Import(SecurityConfig.class)
 class AdminSeansControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private SeansService seansService;
 
-    @MockBean
+    @MockitoBean
     private FilmService filmService;
 
-    @MockBean
+    @MockitoBean
     private SalaService salaService;
+
+    @MockitoBean
+    private pl.gdansk.cinema.cinema_booking.service.CustomUserDetailsService customUserDetailsService;
+
+    @MockitoBean
+    private pl.gdansk.cinema.cinema_booking.security.ImpersonationFilter impersonationFilter;
+
+    @org.junit.jupiter.api.BeforeEach
+    void setup() throws jakarta.servlet.ServletException, java.io.IOException {
+        org.mockito.Mockito.doAnswer(invocation -> {
+            jakarta.servlet.http.HttpServletRequest request = invocation.getArgument(0);
+            jakarta.servlet.http.HttpServletResponse response = invocation.getArgument(1);
+            jakarta.servlet.FilterChain filterChain = invocation.getArgument(2);
+            filterChain.doFilter(request, response);
+            return null;
+        }).when(impersonationFilter).doFilter(any(), any(), any());
+    }
 
     @Test
     @WithMockUser(roles = "ADMIN")
     void shouldListSeanse() throws Exception {
-        when(seansService.getAllSeanse()).thenReturn(List.of());
+        Page<SeansDto> seansePage = new PageImpl<>(Collections.emptyList());
+        when(seansService.getSeansePaged(any(Pageable.class))).thenReturn(seansePage);
 
         mockMvc.perform(get("/admin/seanse"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/seanse-list"))
-                .andExpect(model().attributeExists("seanse"));
+                .andExpect(model().attributeExists("seanse"))
+                .andExpect(model().attributeExists("seansePage"));
     }
 
     @Test

@@ -40,14 +40,37 @@ class SalaServiceTest {
     }
 
     @Test
-    void shouldGetSalaById() {
+    void shouldCreateSala() {
         Sala sala = Sala.builder().id(1L).numer(1).build();
-        SalaDto dto = SalaDto.builder().id(1L).numer(1).build();
+        SalaDto dto = SalaDto.builder().numer(1).build();
+        when(salaMapper.toEntity(dto)).thenReturn(sala);
+        when(salaRepository.save(sala)).thenReturn(sala);
+        when(salaMapper.toDto(sala)).thenReturn(SalaDto.builder().id(1L).numer(1).build());
+
+        SalaDto result = salaService.createSala(dto);
+
+        assertThat(result.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    void shouldUpdateSala() {
+        Sala sala = Sala.builder().id(1L).numer(1).build();
+        SalaDto dto = SalaDto.builder().numer(2).build();
         when(salaRepository.findById(1L)).thenReturn(Optional.of(sala));
-        when(salaMapper.toDto(sala)).thenReturn(dto);
+        when(salaRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        when(salaMapper.toDto(any())).thenReturn(dto);
 
-        SalaDto result = salaService.getSalaById(1L);
+        SalaDto result = salaService.updateSala(1L, dto);
 
-        assertThat(result.getNumer()).isEqualTo(1);
+        assertThat(result.getNumer()).isEqualTo(2);
+    }
+
+    @Test
+    void shouldDeleteSala() {
+        when(salaRepository.existsById(1L)).thenReturn(true);
+
+        salaService.deleteSala(1L);
+
+        verify(salaRepository).deleteById(1L);
     }
 }

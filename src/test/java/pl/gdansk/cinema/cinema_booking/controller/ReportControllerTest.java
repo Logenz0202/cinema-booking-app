@@ -8,8 +8,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.gdansk.cinema.cinema_booking.config.SecurityConfig;
+import pl.gdansk.cinema.cinema_booking.dto.SeansOccupancyReportDto;
 import pl.gdansk.cinema.cinema_booking.service.StatisticsService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -18,9 +20,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(AdminStatisticsController.class)
+@WebMvcTest(ReportController.class)
 @Import(SecurityConfig.class)
-class AdminStatisticsControllerTest {
+class ReportControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -47,21 +49,30 @@ class AdminStatisticsControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    void shouldShowStatisticsPage() throws Exception {
-        when(statisticsService.getSalesStatistics()).thenReturn(List.of());
-        when(statisticsService.getSeansOccupancyReport()).thenReturn(List.of());
+    void shouldDownloadOccupancyReportCsv() throws Exception {
+        // given
+        SeansOccupancyReportDto reportItem = SeansOccupancyReportDto.builder()
+                .seansId(1L)
+                .tytul("Film 1")
+                .dataGodzina(LocalDateTime.now())
+                .zajeteMiejsca(10L)
+                .wszystkieMiejsca(100L)
+                .build();
+        when(statisticsService.getSeansOccupancyReport()).thenReturn(List.of(reportItem));
 
-        mockMvc.perform(get("/admin/statystyki"))
+        // when & then
+        mockMvc.perform(get("/api/v1/raporty/oblozenie/csv"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/statystyki"))
-                .andExpect(model().attributeExists("salesStats"))
-                .andExpect(model().attributeExists("occupancyStats"));
+                .andExpect(header().string("Content-Disposition", "attachment; filename=raport_oblozenia.csv"))
+                .andExpect(content().contentType("text/csv"))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("ID;Film;Data;Zajete;Wszystkie")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("1;Film 1;")));
     }
 
     @Test
     @WithMockUser(roles = "USER")
-    void shouldDenyAccessForNonAdmin() throws Exception {
-        mockMvc.perform(get("/admin/statystyki"))
+    void shouldDenyAccessToReportForNonAdmin() throws Exception {
+        mockMvc.perform(get("/api/v1/raporty/oblozenie/csv"))
                 .andExpect(status().isForbidden());
     }
 }
