@@ -26,7 +26,7 @@ public class AdminSeansController {
     private final SalaService salaService;
 
     @GetMapping
-    public String list(@PageableDefault(size = 10, sort = "dataGodzina", direction = Sort.Direction.DESC) Pageable pageable,
+    public String list(@PageableDefault(size = 12, sort = "dataGodzina", direction = Sort.Direction.ASC) Pageable pageable,
                        Model model) {
         Page<SeansDto> seansePage = seansService.getSeansePaged(pageable);
         model.addAttribute("seansePage", seansePage);
